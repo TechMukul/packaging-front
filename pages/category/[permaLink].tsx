@@ -4,7 +4,7 @@ import Link from "next/link";
 import Navbar from "../../component/Navbar/Navbar";
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from 'firebase/app';
-import { Head } from "next/document";
+// import { Head } from "next/document";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD3NQqtRWs1weSryxTCjpoGgLn-l5KdjQM",

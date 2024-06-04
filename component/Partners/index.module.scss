@@ -1,0 +1,54 @@
+.featuredproducts {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .featuredheading {
+    text-align: center;
+    
+  }
+  
+  .partnercards {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .partnercardwrapper {
+    display: flex;
+    border: 1px solid red round($number: 10);
+    width: calc(300px * 5); /* Set the wrapper width to accommodate 5 cards */
+    animation: slideRight 15s linear infinite;
+  }
+  
+  .partnercard {
+    flex: 0 0 300px; /* Set card width */
+    
+    height: 260px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .partnerimage {
+    width: 100%;
+    height: 10px;
+    border-radius: 8px;
+  }
+  
+  .partnerdescription {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  @keyframes slideRight {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  

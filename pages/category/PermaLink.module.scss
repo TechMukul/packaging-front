@@ -1,0 +1,113 @@
+.container {
+  width: 100%;
+  // padding: 2px;
+  text-align: center;
+  margin-top: 0%;
+}
+.upperSection {
+  display: flex;
+  align-items: flex-start;
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-right: 20px; /* Space between left section and content */
+}
+
+.mainImage {
+  width:520px; /* Set a specific width for the main image */
+  height: 350px; /* Maintain aspect ratio */
+}
+
+.thumbnailContainer {
+  display: flex;
+  flex-direction: column; /* Align thumbnails in a column */
+  margin-right: 10px; /* Space between thumbnails and main image */
+}
+
+.thumbnail {
+  width: 60px; /* Set a specific width for thumbnails */
+  height: auto; /* Maintain aspect se */
+  cursor: pointer;
+  margin-bottom: 5px; /* Adjust gap between thumbnails */
+}
+
+.activeThumbnail {
+  border: 2px solid blue; /* Highlight active thumbnail */
+}
+
+.content {
+  flex: 1; /* Allows content to take up remaining space */
+  font-weight: 500;
+  margin-left: 10px;
+  // font-size: ;
+}
+
+
+
+.section {
+  // margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.paragraph {
+  margin: 10px 0;
+  font-size: large;
+  color: black;
+  font-weight: bolder;
+}
+
+.cardcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+ 
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  transition: transform 0.2s;
+  width: 240px;
+  height: 300px;
+  
+
+  &:hover {
+    transform: translateY(-10px);
+  }
+}
+
+.image {
+  height: 150px;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.cardContent {
+  padding: 20px;
+}
+
+.cardTitle {
+  font-size: 1.2em;
+  color: black;
+  margin: 0 0 10px;
+  text-decoration: none;
+  
+}
+
+.cardDescription {
+  color: #666;
+  // font-size: 1em;
+}

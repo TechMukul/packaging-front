@@ -1,0 +1,52 @@
+.container {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px; /* Adjust the max-width as needed */
+}
+
+.heading {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.categoryList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Align items to the center */
+}
+
+.categoryCard {
+  background-color: #f0f0f0; /* Add background color to cards */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 10px 20px; /* Adjust margin to create spacing between cards */
+  width: calc(25% - 20px); /* Allow 4 cards in a row */
+  max-width: 300px; /* Limit maximum width of cards */
+}
+
+.cardContent {
+  padding: 20px;
+}
+
+.cardTitle {
+  font-family: 'Arial', sans-serif;
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.imageContainer {
+  text-align: center;
+}
+
+.categoryImage {
+  border-radius: 10px;
+}
+
+.metaData {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+}

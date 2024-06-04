@@ -1,0 +1,84 @@
+.main-heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 900;
+  width: 100%;
+  font-family: "Verdana", sans-serif;
+}
+
+.para {
+  font-family: "Verdana", sans-serif;
+  font-size: 1.1rem;
+  color: black;
+}
+
+.divider {
+  border: none;
+  border-top: 2px solid #333;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.dividersmall {
+  border: none;
+  border-top: 2px solid #333;
+  width: 30%;
+  margin: 0 auto;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.centered-image {
+  width: 150px;
+  height: 150px;
+}
+
+.columns-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* Allow columns to wrap to new line */
+}
+
+.column {
+  flex: 1;
+  padding: 0 20px;
+  max-width: 300px; /* Limit column width */
+}
+
+.column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.column ul li {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: black;
+  font-family: "Verdana", sans-serif;
+}
+
+/* Custom bullet style */
+.column ul li::before {
+  content: "\2022";
+  color: #ccc;
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .columns-container {
+    flex-direction: column; /* Stack columns vertically */
+    align-items: center; /* Center columns */
+  }
+
+  .column {
+    width: 100%; /* Occupy full width */
+    padding: 0 10px; /* Reduce padding */
+    max-width: none; /* Remove max-width */
+  }
+}

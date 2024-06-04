@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./About.module.scss";
 import Navbar from "../../component/Navbar/Navbar";
-import Factory from '../../public/image/Untitled design (2).jpg'
+import Factory from '../../public/image/Untitled design (2).webp'
 import Image from "next/image";
 
 const About = ({ Categories }) => {
@@ -101,7 +101,7 @@ export default About;
 export async function getServerSideProps() {
   try {
     const response = await fetch(
-      "http://localhost:3000/carousels/all-carousel"
+      "https://woxnbackend.onrender.com/carousels/all-carousel"
     );
 
     if (!response.ok) {
@@ -113,7 +113,7 @@ export async function getServerSideProps() {
     const carouselData = await response.json();
 
     const categoriesResponse = await fetch(
-      "http://localhost:3000/data/all-category"
+      "https://woxnbackend.onrender.com/data/all-category"
     );
 
     if (!categoriesResponse.ok) {

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Contact.module.scss";
+import styles from "./contact.module.scss";
 import Navbar from "../../component/Navbar/Navbar";
 import location from '../../public/image/location.png'
 import whatss from '../../public/image/whatss.png'
@@ -68,7 +68,7 @@ export default Contact;
 export async function getServerSideProps() {
   try {
     const categoriesResponse = await fetch(
-      "http://localhost:3000/data/all-category"
+      "https://woxnbackend.onrender.com/data/all-category"
     );
 
     if (!categoriesResponse.ok) {

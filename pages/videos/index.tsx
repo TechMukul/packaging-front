@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Navbar from "../../component/Navbar/Navbar";
-import styles from './Video.module.scss';
+import styles from './video.module.scss';
 import Head from 'next/head';
 
 interface VideoComponentProps {
@@ -102,7 +102,7 @@ export default VideoComponent;
 
 export async function getServerSideProps() {
   try {
-    const categoriesResponse = await fetch("http://localhost:3000/data/all-category");
+    const categoriesResponse = await fetch("https://woxnbackend.onrender.com/data/all-category");
 
     if (!categoriesResponse.ok) {
       throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);

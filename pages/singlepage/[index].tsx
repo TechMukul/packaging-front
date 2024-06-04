@@ -101,7 +101,7 @@ export async function getServerSideProps(context) {
   const { index } = params;
 
   try {
-    const response = await fetch(`http://localhost:3000/data/permalink/${index}`);
+    const response = await fetch(`https://woxnbackend.onrender.com/data/permalink/${index}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch data. Status: ${response.status}`);
@@ -109,7 +109,7 @@ export async function getServerSideProps(context) {
 
     const data = await response.json();
 
-    const categoriesResponse = await fetch("http://localhost:3000/data/all-category");
+    const categoriesResponse = await fetch("https://woxnbackend.onrender.com/data/all-category");
 
     if (!categoriesResponse.ok) {
       throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);

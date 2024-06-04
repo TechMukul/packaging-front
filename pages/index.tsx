@@ -20,7 +20,7 @@ export default HomePage;
 
 export async function getServerSideProps() {
   try {
-    const response = await fetch("http://localhost:3000/carousels/all-carousel");
+    const response = await fetch("https://woxnbackend.onrender.com/carousels/all-carousel");
 
     if (!response.ok) {
       throw new Error(`Failed to fetch carousel data. Status: ${response.status}`);
@@ -28,7 +28,7 @@ export async function getServerSideProps() {
 
     const carouselData = await response.json();
 
-    const categoriesResponse = await fetch("http://localhost:3000/data/all-category");
+    const categoriesResponse = await fetch("https://woxnbackend.onrender.com/data/all-category");
 
     if (!categoriesResponse.ok) {
       throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);

@@ -101,7 +101,7 @@ export default About;
 
 export async function getServerSideProps() {
   try {
-    const url =process.env.NEXT_PUBLIC_APIVAL;
+    const url ="https://www.api.woxnpackagingsolution.com";
     const response = await fetch(
       `${url}/carousels/all-carousel`
     );

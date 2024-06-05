@@ -3,7 +3,7 @@ import Homepage from './Homepage';
 import Head from 'next/head';
  
 
-const HomePage = ({ carouselData, Categories,url }) => {
+const index = ({ carouselData, Categories,url }) => {
   // console.log(url)
   return (<>
    <Head>
@@ -19,13 +19,13 @@ const HomePage = ({ carouselData, Categories,url }) => {
   );
 };
 
-export default HomePage;
+export default index;
 
 export async function getServerSideProps() {
   try {
-    // const url =process.env.NEXT_PUBLIC_APIVAL;
-    // console.log(url)
-    const url ="https://www.api.woxnpackagingsolution.com/";
+    const url =process.env.NEXT_PUBLIC_APIVAL;
+    console.log(url)
+    // const url ="https://www.api.woxnpackagingsolution.com/";
     const response = await fetch(`${url}carousels/all-carousel`);
 
     // if (!response.ok) {

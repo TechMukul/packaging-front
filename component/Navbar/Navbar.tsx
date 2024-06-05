@@ -19,9 +19,32 @@ const Navbar = ({ Categories }) => {
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
-  const toggleShowAllCategories = () => {
+  const toggleShowAllCategories = () => { 
     setShowAllCategories(!showAllCategories);
   };
+  if(showMenu===true){
+    return(<>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "20px 0" }}>
+    <div style={{ width: "100%", maxWidth: "400px", textAlign: "center" }}>
+        <Image
+          src={image}
+          alt="pic"
+          style={{ width: "100%", height: "80px", objectFit: "contain" }}
+        />
+    </div>
+</div>
+<div style={{ padding: "0 20px" }}>
+    <ul style={{ listStyle: "none", padding: 0, margin: 0, textAlign: "center" }}>
+        <Link href={"/"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>Home</li></Link>
+        <Link href={"/allCategories"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>Product</li></Link>
+        <Link href={"/videos"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>Videos</li></Link>
+        <Link href={"/about"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>About us</li></Link>
+        <Link href={"/contactus"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>Contact Us</li></Link>
+    </ul>
+</div>
+</>
+)
+  }
   const renderCategoriesDropdown = () => {
     return (
       <div className={styles.dropdown}>
@@ -46,6 +69,9 @@ const Navbar = ({ Categories }) => {
         backgroundColor: "white",
       }}
     >
+       <div className={styles.menuIcon} onClick={toggleMenu}>
+        <Image src={threelines} alt="menu" width={30} height={30} />
+      </div>
       <div className={styles.logo}>
         <Image
           src={image}
@@ -92,7 +118,7 @@ const Navbar = ({ Categories }) => {
               />
             </a>
             <a
-              href="https://www.instagram.com/woxnpackagingsolution/"
+              href="https://www.youtube.com/@woxnpackagingsolution"
               target="_blank"
               style={{ marginLeft: "5px", width: "4%" }}
             >

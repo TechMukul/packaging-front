@@ -4,10 +4,11 @@ import Navbar from "../../component/Navbar/Navbar";
 import Factory from '../../public/image/Untitled design (2).webp'
 import Image from "next/image";
 
-const About = ({ Categories }) => {
+const About = ({ Categories,url }) => {
   return (
     <>
       {/* <Navbar Categories={Categories} /> */}
+      <h2>ewqrqoi{url}</h2>
       <div className={styles.container}>
         <div className={styles.header}>
           <h1>ABOUT US</h1>
@@ -100,8 +101,9 @@ export default About;
 
 export async function getServerSideProps() {
   try {
+    const url =process.env.NEXT_PUBLIC_APIVAL;
     const response = await fetch(
-      `${process.env.apival}/carousels/all-carousel`
+      `${url}/carousels/all-carousel`
     );
 
     if (!response.ok) {
@@ -113,7 +115,7 @@ export async function getServerSideProps() {
     const carouselData = await response.json();
 
     const categoriesResponse = await fetch(
-      `${process.env.apival}/data/all-category`
+      `${url}/data/all-category`
     );
 
     if (!categoriesResponse.ok) {
@@ -126,6 +128,7 @@ export async function getServerSideProps() {
 
     return {
       props: {
+        url,
         carouselData,
         Categories,
       },

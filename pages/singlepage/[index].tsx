@@ -104,7 +104,8 @@ export async function getServerSideProps(context) {
 
   try {
     // const url =process.env.NEXT_PUBLIC_APIVAL;
-    const url ="https://www.api.woxnpackagingsolution.com/";
+    // const url ="https://www.api.woxnpackagingsolution.com/";
+    const url =process.env.NEXT_PUBLIC_APIVAL;
     const response = await fetch(
       `${url}data/permalink/${index}`
     );

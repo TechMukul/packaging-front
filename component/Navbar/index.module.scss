@@ -5,6 +5,9 @@
   background-color: white;
   width: 100%;
 }
+.menuIcon{
+  display: none;
+}
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -149,7 +152,6 @@ display: flex;
 
   .upper {
     display: none;
-    background-color:white;
   }
 
   .logo {
@@ -158,7 +160,7 @@ display: flex;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 140px;
+    margin-left: 60px;
   }
 
   .logo img {
@@ -166,49 +168,25 @@ display: flex;
     height: 100%;
   }
 
-  .menu-icon {
+  .menuIcon {
     display: block;
     font-size: 24px;
+    margin: 20px;
   }
 
-  .menu-icon.show-menu {
-    transform: rotate(90deg);
-  }
-
-  .tabs.show-menu {
+  .showMenu {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 100%;
+    top: 60px;
     right: 0;
     background-color: white;
     border: 1px solid #ccc;
     z-index: 1;
+    width: 100%;
   }
 
-  .tabs.show-menu a {
-    margin: 5px;
-  }
-
-  .navbar {
-    padding: 0; /* Remove padding for smaller screens */
-  }
-
-  .upper {
-    flex-direction: column; /* Change direction to column for smaller screens */
-  }
-
-  .upper > div {
-    margin-bottom: 10px; /* Add margin between social media icons for smaller screens */
-  }
-
-  .upper a {
-    margin-left: 0; /* Remove margin for social media icons for smaller screens */
-    width: auto; /* Allow width to adjust based on content for smaller screens */
-  }
-
-  .email, .phone {
-    margin-left: 0; /* Remove margin for email and phone for smaller screens */
-    margin-top: 10px; /* Add margin top for email and phone for smaller screens */
+  .tabs.showMenu a {
+    margin: 10px;
   }
 }

@@ -156,7 +156,8 @@ export async function getServerSideProps(context) {
   const { permaLink } = params;
 
   try {
-    const url ="https://www.api.woxnpackagingsolution.com/";
+    // const url ="https://www.api.woxnpackagingsolution.com/";
+    const url =process.env.NEXT_PUBLIC_APIVAL;
     const responseUpper = await fetch(
       `${url}data/head/permalink/${permaLink}`
     );

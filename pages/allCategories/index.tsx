@@ -57,8 +57,9 @@ export default Index;
 
 export async function getServerSideProps() {
   try {
+    const url =process.env.NEXT_PUBLIC_APIVAL;
     const response = await fetch(
-      `${process.env.apival}/carousels/all-carousel`
+      `${url}carousels/all-carousel`
     );
 
     if (!response.ok) {
@@ -67,7 +68,7 @@ export async function getServerSideProps() {
 
     const carouselData = await response.json();
 
-    const categoriesResponse = await fetch(`${process.env.apival}/data/all-category`);
+    const categoriesResponse = await fetch(`${url}data/all-category`);
 
     if (!categoriesResponse.ok) {
       throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);

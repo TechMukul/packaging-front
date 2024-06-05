@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Navbar from "../../component/Navbar/Navbar";
 import styles from './video.module.scss';
 import Head from 'next/head';
+import Link from 'next/link';
 
 interface VideoComponentProps {
   Categories: any; // Replace `any` with the actual type if known
@@ -58,13 +59,15 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ Categories }) => {
   };
 
   return (
-    <>  <Head>
-    <title>Our Videos</title>
-    <meta name="description" content="We are machines manufacturer" />
-    {/* Additional meta tags, stylesheets, etc. */}
-  </Head>
+    <>
+      <Head>
+        <title>Our Videos</title>
+        <meta name="description" content="We are machines manufacturer" />
+        {/* Additional meta tags, stylesheets, etc. */}
+      </Head>
       {/* <Navbar Categories={Categories} /> */}
       <div className={styles.container}>
+    
         <h1 style={{ textAlign: "center" }}>Our Productions</h1>
         <div
           className={styles.videoWrapper}
@@ -74,10 +77,8 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ Categories }) => {
           <div ref={playerRef} className={styles.video}></div>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div className={styles.iframeContainer}>
         <iframe
-          width="400"
-          height="315"
           src="https://www.youtube.com/embed/Wvk2hgJRAd8"
           title="YouTube video player"
           frameBorder="0"
@@ -85,8 +86,6 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ Categories }) => {
           allowFullScreen
         ></iframe>
         <iframe
-          width="560"
-          height="315"
           src="https://www.youtube.com/embed/0890bIy0Pyg"
           title="YouTube video player"
           frameBorder="0"
@@ -102,7 +101,8 @@ export default VideoComponent;
 
 export async function getServerSideProps() {
   try {
-    const categoriesResponse = await fetch(`${process.env.apival}/data/all-category`);
+    const url =process.env.NEXT_PUBLIC_APIVAL;
+    const categoriesResponse = await fetch(`${url}data/all-category`);
 
     if (!categoriesResponse.ok) {
       throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);

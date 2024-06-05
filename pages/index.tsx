@@ -23,18 +23,21 @@ export default index;
 
 export async function getServerSideProps() {
   try {
-    const url =process.env.NEXT_PUBLIC_APIVAL;
-    console.log(url)
-    // const url ="https://www.api.woxnpackagingsolution.com/";
-    const response = await fetch(`${url}carousels/all-carousel`);
+    const url ="https://www.api.woxnpackagingsolution.com";
+    console.log(url);
 
-    // if (!response.ok) {
-    //   throw new Error(`Failed to fetch carousel data. Status: ${response.status}`);
-    // }
+    // Fetching data using the proxy endpoint
+    const response = await fetch(`${url}/api/proxy?path=carousels/all-carousel`);
+    // const response = await fetch(`/api/proxy?path=carousels/all-carousel`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch carousel data. Status: ${response.status}`);
+    }
 
     const carouselData = await response.json();
 
-    const categoriesResponse = await fetch(`${url}data/all-category`);
+    const categoriesResponse = await fetch(`${url}/data/all-category`);
+
 
     // if (!categoriesResponse.ok) {
     //   throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);

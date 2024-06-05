@@ -13,9 +13,7 @@ const nextConfig = {
       'firebasestorage.googleapis.com'
     ],
   },
-  env: {
-    NEXT_PUBLIC_APIVAL: process.env.NEXT_PUBLIC_APIVAL,
-  },
+  
 };
 
 export default nextConfig;

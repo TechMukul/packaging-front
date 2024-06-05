@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 import Navbar from "../../component/Navbar/Navbar";
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { initializeApp } from 'firebase/app';
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { initializeApp } from "firebase/app";
 import Head from "next/head";
 
 const firebaseConfig = {
@@ -12,7 +12,7 @@ const firebaseConfig = {
   storageBucket: "woxnpackaging.appspot.com",
   messagingSenderId: "727828228447",
   appId: "1:727828228447:web:554b313dcd3df6c67a6eea",
-  measurementId: "G-8HF5CJ9Y3Q"
+  measurementId: "G-8HF5CJ9Y3Q",
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -49,20 +49,22 @@ const PermaLink = ({ data, Categories }) => {
               ))}
             </div>
             <div className={styles.cont}>
-              <img src={mainImage} alt="Main" className={styles["main-image"]} />
+              <img
+                src={mainImage}
+                alt="Main"
+                className={styles["main-image"]}
+              />
             </div>
             <div className={styles.content}>
-            <div
-  className={styles.description}
-  dangerouslySetInnerHTML={{
-    __html: data.content
-      .replace(/<head[^>]*>[\s\S]*?<\/head>/g, '') // Remove head tag and its content
-      .replace(/<h1[^>]*>.*?<\/h1>/g, '') // Remove h1 tag and its content
-      .replace(/\\n|\\/g, '') // Remove newline characters and backslashes
-  }}
-/>
-
-
+              <div
+                className={styles.description}
+                dangerouslySetInnerHTML={{
+                  __html: data.content
+                    .replace(/<head[^>]*>[\s\S]*?<\/head>/g, "") // Remove head tag and its content
+                    .replace(/<h1[^>]*>.*?<\/h1>/g, "") // Remove h1 tag and its content
+                    .replace(/\\n|\\/g, ""), // Remove newline characters and backslashes
+                }}
+              />
 
               {data.additionalInfo && (
                 <table className={styles.table}>
@@ -101,7 +103,11 @@ export async function getServerSideProps(context) {
   const { index } = params;
 
   try {
-    const response = await fetch(`https://woxnbackend.onrender.com/data/permalink/${index}`);
+    // const url =process.env.NEXT_PUBLIC_APIVAL;
+    const url ="https://www.api.woxnpackagingsolution.com/";
+    const response = await fetch(
+      `${url}data/permalink/${index}`
+    );
 
     if (!response.ok) {
       throw new Error(`Failed to fetch data. Status: ${response.status}`);
@@ -109,10 +115,14 @@ export async function getServerSideProps(context) {
 
     const data = await response.json();
 
-    const categoriesResponse = await fetch("https://woxnbackend.onrender.com/data/all-category");
+    const categoriesResponse = await fetch(
+      `${url}data/all-category`
+    );
 
     if (!categoriesResponse.ok) {
-      throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);
+      throw new Error(
+        `Failed to fetch categories data. Status: ${categoriesResponse.status}`
+      );
     }
 
     const Categories = await categoriesResponse.json();
@@ -120,17 +130,19 @@ export async function getServerSideProps(context) {
     const storage = getStorage(initializeApp(firebaseConfig));
 
     // Fetch image URLs from Firebase Storage
-    const photoUrls = await Promise.all(data.photo.map(async (photoPath) => {
-      const imageRef = ref(storage, photoPath);
-      return await getDownloadURL(imageRef);
-    }));
+    const photoUrls = await Promise.all(
+      data.photo.map(async (photoPath) => {
+        const imageRef = ref(storage, photoPath);
+        return await getDownloadURL(imageRef);
+      })
+    );
 
     data.photo = photoUrls;
 
     return {
       props: {
         data,
-        Categories
+        Categories,
       },
     };
   } catch (error) {

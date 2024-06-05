@@ -3,7 +3,9 @@ import App from 'next/app';
 import Footer from "../component/Footer/Footer";
 import Navbar from "../component/Navbar/Navbar";
 // import '../styles/globals.scss'; // Adjust the path accordingly
+import dotenv from 'dotenv';
 
+dotenv.config();
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};

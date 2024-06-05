@@ -102,7 +102,7 @@ export default VideoComponent;
 
 export async function getServerSideProps() {
   try {
-    const categoriesResponse = await fetch("https://woxnbackend.onrender.com/data/all-category");
+    const categoriesResponse = await fetch(`${process.env.apival}/data/all-category`);
 
     if (!categoriesResponse.ok) {
       throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);

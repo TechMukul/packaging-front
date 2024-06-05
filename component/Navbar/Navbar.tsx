@@ -7,6 +7,7 @@ import insta from "../../public/image/insta.webp";
 import you from "../../public/image/you.png";
 import email from "../../public/image/email.jpg";
 import phone from "../../public/image/whattt.png";
+import threelines from "../../public/image/three lines.png";
 import styles from "./index.module.scss";
 import Image from "next/image";
 import Link from "next/link";
@@ -149,6 +150,7 @@ const Navbar = ({ Categories }) => {
           </div>
         </div>
         <div className={`${styles.tabs} ${styles.showMenu ? "show-menu" : ""}`}>
+          
           <Link href="/">Home</Link>
           <div
             className={styles.dropdownContainer}
@@ -179,7 +181,9 @@ const Navbar = ({ Categories }) => {
             />
             <div className={styles.underline}></div>
           </div>
+          
         </div>
+        
       </div>
     </div>
   );

@@ -68,7 +68,7 @@ export default Contact;
 export async function getServerSideProps() {
   try {
     const categoriesResponse = await fetch(
-      "https://woxnbackend.onrender.com/data/all-category"
+      `${process.env.apival}/data/all-category`
     );
 
     if (!categoriesResponse.ok) {

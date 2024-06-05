@@ -25,7 +25,7 @@ const index = ({ carouselData ,Category }) => {
       </Suspense>
       <WhatsApp />
       <Content />
-      <Categories category={Category}/>
+      {/* <Categories category={Category}/> */}
       <Feature />
       <Banner />
       <Patners />

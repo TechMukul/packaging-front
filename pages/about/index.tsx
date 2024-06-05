@@ -101,7 +101,7 @@ export default About;
 export async function getServerSideProps() {
   try {
     const response = await fetch(
-      "https://woxnbackend.onrender.com/carousels/all-carousel"
+      `${process.env.apival}/carousels/all-carousel`
     );
 
     if (!response.ok) {
@@ -113,7 +113,7 @@ export async function getServerSideProps() {
     const carouselData = await response.json();
 
     const categoriesResponse = await fetch(
-      "https://woxnbackend.onrender.com/data/all-category"
+      `${process.env.apival}/data/all-category`
     );
 
     if (!categoriesResponse.ok) {

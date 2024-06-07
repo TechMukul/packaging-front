@@ -13,11 +13,11 @@ import Search from "../../component/Search/Search";
 // Lazy load the Carousel component
 const LazyCarousel = lazy(() => import("../../component/Carousel/Carousel"));
 
-const index = ({ carouselData ,Category }) => {
+const index = ({ carouselData  }) => {
   // console.log("cccc",carouselData);
   return (
     <div style={{ backgroundColor: "whitesmoke" }}>
-      <Navbar Categories={Category}/>
+      <Navbar />
       <Search />
       {/* Wrap the lazy-loaded component in Suspense */}
       <Suspense fallback={<div>Loading...</div>}>

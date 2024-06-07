@@ -17,7 +17,7 @@ const index = ({ carouselData ,Category }) => {
   // console.log("cccc",carouselData);
   return (
     <div style={{ backgroundColor: "whitesmoke" }}>
-      {/* <Navbar Categories={Category}/> */}
+      <Navbar Categories={Category}/>
       <Search />
       {/* Wrap the lazy-loaded component in Suspense */}
       <Suspense fallback={<div>Loading...</div>}>

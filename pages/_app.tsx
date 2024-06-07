@@ -20,7 +20,7 @@ class MyApp extends App {
 
     return (
       <div>
-        <Navbar Categories={pageProps.Categories} />
+        {/* <Navbar Categories={pageProps.Categories} /> */}
         <Component {...pageProps} />
         <Footer />
       </div>

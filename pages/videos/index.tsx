@@ -98,29 +98,3 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ Categories }) => {
 };
 
 export default VideoComponent;
-
-export async function getServerSideProps() {
-  try {
-    const url =process.env.NEXT_PUBLIC_APIVAL;
-    const categoriesResponse = await fetch(`${url}data/all-category`);
-
-    if (!categoriesResponse.ok) {
-      throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);
-    }
-
-    const Categories = await categoriesResponse.json();
-
-    return {
-      props: {
-        Categories,
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return {
-      props: {
-        Categories: null,
-      },
-    };
-  }
-}

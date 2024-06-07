@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./About.module.scss";
 import Navbar from "../../component/Navbar/Navbar";
 import Factory from '../../public/image/Untitled design (2).webp'
+import axios from 'axios'
 import Image from "next/image";
 
 const About = ({ Categories,url }) => {
+  const [carouselData, setCarouselData] = useState(null);
+  const [categories, setCategories] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url ="https://www.api.woxnpackagingsolution.com";
+        const carouselResponse = await axios.get(`${url}/carousels/all-carousel`);
+        const categoriesResponse = await axios.get(`${url}/data/all-category`);
+
+        setCarouselData(carouselResponse.data);
+        setCategories(categoriesResponse.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       {/* <Navbar Categories={Categories} /> */}
@@ -99,47 +121,47 @@ const About = ({ Categories,url }) => {
 
 export default About;
 
-export async function getServerSideProps() {
-  try {
-    const url ="https://www.api.woxnpackagingsolution.com";
-    const response = await fetch(
-      `${url}/carousels/all-carousel`
-    );
+// export async function getServerSideProps() {
+//   try {
+//     const url ="https://www.api.woxnpackagingsolution.com";
+//     const response = await fetch(
+//       `${url}/carousels/all-carousel`
+//     );
 
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch carousel data. Status: ${response.status}`
-      );
-    }
+//     if (!response.ok) {
+//       throw new Error(
+//         `Failed to fetch carousel data. Status: ${response.status}`
+//       );
+//     }
 
-    const carouselData = await response.json();
+//     const carouselData = await response.json();
 
-    const categoriesResponse = await fetch(
-      `${url}/data/all-category`
-    );
+//     const categoriesResponse = await fetch(
+//       `${url}/data/all-category`
+//     );
 
-    if (!categoriesResponse.ok) {
-      throw new Error(
-        `Failed to fetch categories data. Status: ${categoriesResponse.status}`
-      );
-    }
+//     if (!categoriesResponse.ok) {
+//       throw new Error(
+//         `Failed to fetch categories data. Status: ${categoriesResponse.status}`
+//       );
+//     }
 
-    const Categories = await categoriesResponse.json();
+//     const Categories = await categoriesResponse.json();
 
-    return {
-      props: {
-        url,
-        carouselData,
-        Categories,
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return {
-      props: {
-        carouselData: null,
-        Categories: null,
-      },
-    };
-  }
-}
+//     return {
+//       props: {
+//         url,
+//         carouselData,
+//         Categories,
+//       },
+//     };
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//     return {
+//       props: {
+//         carouselData: null,
+//         Categories: null,
+//       },
+//     };
+//   }
+// }

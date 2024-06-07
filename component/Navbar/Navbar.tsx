@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import image from "../../public//image/WhatsApp Image 2024-05-21 at 7.46.54 AM.webp";
 import Gem from "../../public/image/Gem.jpg";
 import ISO from "../../public/image/ISO.jpg";
@@ -11,9 +11,27 @@ import threelines from "../../public/image/three lines.png";
 import styles from "./index.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import axios from 'axios'
 // import email from '../../public/image/email.png'
 // import location from "../../public/image/location.png";
-const Navbar = ({ Categories }) => {
+const Navbar = () => {
+
+  const [Categories, setCategories] = useState<any>(null);
+  const [url] = useState("https://www.api.woxnpackagingsolution.com/");
+
+  useEffect(() => {
+
+    const fetchCategoriesData = async () => {
+      try {
+        const response = await axios.get(`${url}data/all-category`);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories data:", error);
+      }
+    };
+
+    fetchCategoriesData();
+  }, [url]);
   const [showMenu, setShowMenu] = useState(false);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const toggleMenu = () => {
@@ -48,7 +66,8 @@ const Navbar = ({ Categories }) => {
   const renderCategoriesDropdown = () => {
     return (
       <div className={styles.dropdown}>
-        {Categories.slice(0, 8).map((category) => (
+        {Categories&&
+        Categories.slice(0, 8).map((category) => (
           <Link key={category._id} href={`/category/${category.permaLink}`}>
             {category.name}
           </Link>

@@ -1,61 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Homepage from './Homepage';
 import Head from 'next/head';
- 
+import axios from 'axios';
 
-const index = ({ carouselData, Categories,url }) => {
-  // console.log(url)
-  return (<>
-   <Head>
+const Index = () => {
+  const [carouselData, setCarouselData] = useState(null);
+  const [Categories, setCategories] = useState(null);
+  const [url] = useState("https://www.api.woxnpackagingsolution.com/");
+
+  useEffect(() => {
+
+    const fetchCategoriesData = async () => {
+      try {
+        const response = await axios.get(`${url}data/all-category`);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories data:", error);
+      }
+    };
+    const fetchCarouselData = async () => {
+      try {
+        const response = await axios.get(`${url}carousels/all-carousel`);
+        setCarouselData(response.data);
+      } catch (error) {
+        console.error("Error fetching carousel data:", error);
+      }
+    };
+
+   
+
+    fetchCarouselData();
+    fetchCategoriesData();
+  }, [url]);
+console.log(Categories)
+  return (
+    <>
+      <Head>
         <title>Woxn Packaging Solutions</title>
         <meta name="description" content="We are machines manufacturer" />
         {/* Additional meta tags, stylesheets, etc. */}
       </Head>
-    <div>
-    
-      <Homepage Category={Categories} carouselData={carouselData} />
-    </div>
+      <div>
+        <Homepage Category={Categories} carouselData={carouselData} />
+      </div>
     </>
   );
 };
 
-export default index;
-
-export async function getServerSideProps() {
-  try {
-    const url ="https://www.api.woxnpackagingsolution.com/"
-    console.log(url)
-    // const url ="https://www.api.woxnpackagingsolution.com/";
-    const response = await fetch(`${url}carousels/all-carousel`);
-
-    // if (!response.ok) {
-    //   throw new Error(`Failed to fetch carousel data. Status: ${response.status}`);
-    // }
-
-    const carouselData = await response.json();
-
-    const categoriesResponse = await fetch(`${url}data/all-category`);
-
-    // if (!categoriesResponse.ok) {
-    //   throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);
-    // }
-
-    const Categories = await categoriesResponse.json();
-
-    return {
-      props: {
-        url,
-        carouselData ,
-        Categories,
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return {
-      props: {
-        carouselData: null,
-        Categories: null,
-      },
-    };
-  }
-}
+export default Index;

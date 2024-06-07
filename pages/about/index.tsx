@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./About.module.scss";
 import Navbar from "../../component/Navbar/Navbar";
-import Factory from '../../public/image/Untitled design (2).webp'
+import Factory from '../../public/image/Untitled design (2).svg'
 import axios from 'axios'
 import Image from "next/image";
 

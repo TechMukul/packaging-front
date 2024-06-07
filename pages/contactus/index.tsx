@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./contact.module.scss";
 import Navbar from "../../component/Navbar/Navbar";
-import location from '../../public/image/location.png'
-import whatss from '../../public/image/whatss.png'
+import location from '../../public/image/location.svg'
+import whatss from '../../public/image/whatss.svg'
 import Image from "next/image";
 import Head from "next/head";
 

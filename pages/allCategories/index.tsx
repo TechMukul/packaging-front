@@ -22,6 +22,7 @@ const Index: React.FC<IndexProps> = ({ Categories }) => {
   return (
     <>
     {/* <Navbar Categories={Categories}/> */}
+    <Navbar />
     <div className={styles.container}>
       <h2 className={styles.heading}>All Categories</h2>
       <div className={styles.categoryList}>

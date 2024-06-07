@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.module.scss";
 import Navbar from "../../component/Navbar/Navbar";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
 import Head from "next/head";
+import axios from "axios"; // Import axios for data fetching
+import { useRouter } from "next/router";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD3NQqtRWs1weSryxTCjpoGgLn-l5KdjQM",
@@ -13,44 +15,69 @@ const firebaseConfig = {
   messagingSenderId: "727828228447",
   appId: "1:727828228447:web:554b313dcd3df6c67a6eea",
   measurementId: "G-8HF5CJ9Y3Q",
-};
+};const PermaLink = () => {
+  const [Categories, setCategories] = useState<any>(null); // State for categories
+  const [mainImage, setMainImage] = useState<any>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0); // State for selected index
+  const router = useRouter();
+  const { index } = router.query;
 
-const firebaseApp = initializeApp(firebaseConfig);
-const storage = getStorage(firebaseApp);
+  useEffect(() => {
+    const fetchPermalinkData = async () => {
+      try {
+        const url = process.env.NEXT_PUBLIC_APIVAL;
+        const response = await axios.get(`${url}data/permalink/${index}`);
+        const result = response.data;
 
-const PermaLink = ({ data, Categories }) => {
-  const [mainImage, setMainImage] = useState(data.photo[0]);
+        const storage = getStorage(initializeApp(firebaseConfig));
+        const photoUrls = await Promise.all(
+          result.photo.map(async (photoPath) => {
+            const imageRef = ref(storage, photoPath);
+            return await getDownloadURL(imageRef);
+          })
+        );
 
-  const handleThumbnailClick = (photo) => {
-    setMainImage(photo);
+        result.photo = photoUrls;
+        setMainImage(result);
+      } catch (error) {
+        console.error("Error fetching permalink data:", error);
+      }
+    };
+
+    if (index) {
+      fetchPermalinkData();
+    }
+  }, [index]);
+
+  const handleThumbnailClick = (index) => {
+    setSelectedIndex(index);
   };
 
   return (
     <>
       <Head>
-        <title>{data.title}</title>
+        <title>{mainImage?.title}</title>
         <meta name="description" content="We are machines manufacturer" />
-        {/* Additional meta tags, stylesheets, etc. */}
       </Head>
-      {/* <Navbar Categories={Categories} /> */}
-      <h1 className={styles.title}>{data.title}</h1>
+      <Navbar />
+      <h1 className={styles.title}>{mainImage?.title}</h1>
       <div className={styles["card-container"]}>
-        {data ? (
+        {mainImage ? (
           <>
             <div className={styles["thumbnail-container"]}>
-              {data.photo.map((item, index) => (
+              {mainImage.photo.map((item, index) => (
                 <img
                   key={index}
                   src={item}
                   alt={`Thumbnail ${index}`}
-                  className={styles.thumbnail}
-                  onClick={() => handleThumbnailClick(item)}
+                  className={`${styles.thumbnail} ${index === selectedIndex ? styles.selected : ''}`}
+                  onClick={() => handleThumbnailClick(index)}
                 />
               ))}
             </div>
             <div className={styles.cont}>
               <img
-                src={mainImage}
+                src={mainImage.photo[selectedIndex]}
                 alt="Main"
                 className={styles["main-image"]}
               />
@@ -59,14 +86,13 @@ const PermaLink = ({ data, Categories }) => {
               <div
                 className={styles.description}
                 dangerouslySetInnerHTML={{
-                  __html: data.content
-                    .replace(/<head[^>]*>[\s\S]*?<\/head>/g, "") // Remove head tag and its content
-                    .replace(/<h1[^>]*>.*?<\/h1>/g, "") // Remove h1 tag and its content
-                    .replace(/\\n|\\/g, ""), // Remove newline characters and backslashes
+                  __html: mainImage.content
+                    ?.replace(/<head[^>]*>[\s\S]*?<\/head>/g, "")
+                    .replace(/<h1[^>]*>.*?<\/h1>/g, "")
+                    .replace(/\\n|\\/g, ""),
                 }}
               />
-
-              {data.additionalInfo && (
+              {mainImage.additionalInfo && (
                 <table className={styles.table}>
                   <thead>
                     <tr>
@@ -75,11 +101,10 @@ const PermaLink = ({ data, Categories }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {Object.entries(data.additionalInfo).map(
+                    {Object.entries(mainImage.additionalInfo).map(
                       ([key, value], index) => (
                         <tr key={index}>
                           <td>{key}</td>
-                          {/* <td>{value}</td> */}
                         </tr>
                       )
                     )}
@@ -97,61 +122,3 @@ const PermaLink = ({ data, Categories }) => {
 };
 
 export default PermaLink;
-
-export async function getServerSideProps(context) {
-  const { params } = context;
-  const { index } = params;
-
-  try {
-    // const url =process.env.NEXT_PUBLIC_APIVAL;
-    // const url ="https://www.api.woxnpackagingsolution.com/";
-    const url =process.env.NEXT_PUBLIC_APIVAL;
-    const response = await fetch(
-      `${url}data/permalink/${index}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data. Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    const categoriesResponse = await fetch(
-      `${url}data/all-category`
-    );
-
-    if (!categoriesResponse.ok) {
-      throw new Error(
-        `Failed to fetch categories data. Status: ${categoriesResponse.status}`
-      );
-    }
-
-    const Categories = await categoriesResponse.json();
-
-    const storage = getStorage(initializeApp(firebaseConfig));
-
-    // Fetch image URLs from Firebase Storage
-    const photoUrls = await Promise.all(
-      data.photo.map(async (photoPath) => {
-        const imageRef = ref(storage, photoPath);
-        return await getDownloadURL(imageRef);
-      })
-    );
-
-    data.photo = photoUrls;
-
-    return {
-      props: {
-        data,
-        Categories,
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return {
-      props: {
-        data: null,
-      },
-    };
-  }
-}

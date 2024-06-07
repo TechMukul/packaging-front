@@ -9,12 +9,14 @@ import Head from "next/head";
 const Contact = ({ Categories }) => {
   return (
     <>
+    
       <Head>
         <title>Contact Us</title>
         <meta name="description" content="We are machines manufacturer" />
         {/* Additional meta tags, stylesheets, etc. */}
       </Head>
       {/* <Navbar Categories={Categories} /> */}
+      <Navbar />
       <div className={styles.container}>
         <div className={styles.header}>
           <h1>Contact Us</h1>
@@ -64,32 +66,3 @@ const Contact = ({ Categories }) => {
 };
 
 export default Contact;
-
-export async function getServerSideProps() {
-  try {
-    const categoriesResponse = await fetch(
-      `${process.env.apival}/data/all-category`
-    );
-
-    if (!categoriesResponse.ok) {
-      throw new Error(
-        `Failed to fetch categories data. Status: ${categoriesResponse.status}`
-      );
-    }
-
-    const Categories = await categoriesResponse.json();
-
-    return {
-      props: {
-        Categories,
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return {
-      props: {
-        Categories: null,
-      },
-    };
-  }
-}

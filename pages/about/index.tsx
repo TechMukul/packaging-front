@@ -30,6 +30,7 @@ const About = ({ Categories,url }) => {
   return (
     <>
       {/* <Navbar Categories={Categories} /> */}
+      <Navbar />
       <h2>ewqrqoi{url}</h2>
       <div className={styles.container}>
         <div className={styles.header}>

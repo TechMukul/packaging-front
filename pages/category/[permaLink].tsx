@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import styles from "./PermaLink.module.scss";
 import Link from "next/link";
 import Navbar from "../../component/Navbar/Navbar";
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from 'firebase/app';
-// import { Head } from "next/document";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD3NQqtRWs1weSryxTCjpoGgLn-l5KdjQM",
@@ -16,26 +16,69 @@ const firebaseConfig = {
   measurementId: "G-8HF5CJ9Y3Q"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-const storage = getStorage(firebaseApp);
+const storage = getStorage(initializeApp(firebaseConfig));
 
-const PermaLink = ({ permaLink, upperData, lowerData, Categories }) => {
-  console.log(lowerData)
+const PermaLink = ({ Categories }) => {
+  const router = useRouter();
+  const { permaLink } = router.query;
+
+  const [upperData, setUpperData] = useState<any>(null);
+  const [lowerData, setLowerData] = useState<any>([]);
+  const [loadingRelated, setLoadingRelated] = useState<any>(true);
+  const [mainImageIndex, setMainImageIndex] = useState<any>(0);
+
+  useEffect(() => {
+    const fetchPermaLinkData = async () => {
+      try {
+        const url = process.env.NEXT_PUBLIC_APIVAL;
+        const responseUpper = await fetch(`${url}data/head/permalink/${permaLink}`);
+        const upperData = await responseUpper.json();
+
+        const responseLower = await fetch(`${url}data/category/${permaLink}`);
+        const lowerData = await responseLower.json();
+
+        const upperImageUrls = await fetchImageUrls(upperData.photo);
+        const lowerImageUrls = await fetchImageUrls(lowerData.map(item => item.photo[0]));
+
+        setUpperData({
+          ...upperData,
+          photo: upperImageUrls
+        });
+        setLowerData(
+          lowerData.map((item, index) => ({
+            ...item,
+            photo: [lowerImageUrls[index]]
+          }))
+        );
+        setLoadingRelated(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    if (permaLink) {
+      fetchPermaLinkData();
+    }
+  }, [permaLink]);
+ 
+  const fetchImageUrls = async (photoUrls) => {
+    try {
+      const imageUrls = await Promise.all(
+        photoUrls.map(async (photoUrl) => {
+          const imageRef = ref(storage, photoUrl);
+          return getDownloadURL(imageRef);
+        })
+      );
+      return imageUrls;
+    } catch (error) {
+      console.error("Error fetching image URLs:", error);
+      return [];
+    }
+  };
   const formatTitle = (link) => {
     return link.replace(/-/g, " ").toUpperCase();
   };
-
-  const [mainImageIndex, setMainImageIndex] = useState(0);
-  const [loadingRelated, setLoadingRelated] = useState(true); // Loading state for related products
-
-  useEffect(() => {
-    setLoadingRelated(false); // Set loading to false when related products are loaded
-  }, [lowerData]);
-
-  const handleImageClick = (index) => {
-    setMainImageIndex(index);
-  };
-
+  
   const handleThumbnailClick = (index) => {
     setMainImageIndex(index);
   };
@@ -59,43 +102,43 @@ const PermaLink = ({ permaLink, upperData, lowerData, Categories }) => {
 
   return (
     <>
-     {/* <Head>
-        <title></title>
-        <meta name="description" content="We are machines manufacturer" />
-      </Head> */}
-    {/* <Navbar Categories={Categories}/> */}
-      <h1 className={styles.title} style={{ textAlign: "center", fontWeight: "bold", fontFamily: "" }}>
-        {formatTitle(upperData.title)}
-      </h1>
-      <div className={styles.container}>
-        <div className={styles.upperSection}>
-          <div className={styles.thumbnailContainer}>
-            {upperData.photo.map((image, index) => (
-              <img
-                key={index}
-                className={`${styles.thumbnail} ${index === mainImageIndex ? styles.activeThumbnail : ''}`}
-                src={image}
-                alt={`${upperData.title} ${index + 1}`}
-                onClick={() => handleThumbnailClick(index)}
-              />
-            ))}
+      <Navbar />
+      {upperData && (
+        <>
+          <h1 className={styles.title} style={{ textAlign: "center", fontWeight: "bold", fontFamily: "" }}>
+            {upperData && formatTitle(upperData.title)}
+          </h1>
+          <div className={styles.container}>
+            <div className={styles.upperSection}>
+              <div className={styles.thumbnailContainer}>
+                {upperData.photo.map((image, index) => (
+                  <img
+                    key={index}
+                    className={`${styles.thumbnail} ${index === mainImageIndex ? styles.activeThumbnail : ''}`}
+                    src={image}
+                    alt={`${upperData.title} ${index + 1}`}
+                    onClick={() => handleThumbnailClick(index)}
+                  />
+                ))}
+              </div>
+              <div className={styles.leftSection}>
+                <img
+                  className={styles.mainImage}
+                  src={upperData.photo[mainImageIndex]}
+                  alt={upperData.title}
+                />
+              </div>
+              <div className={styles.content} style={{ textAlign: "justify", fontWeight: "1400" }}>
+                {formatContent(upperData.content)}
+              </div>
+            </div>
           </div>
-          <div className={styles.leftSection}>
-            <img
-              className={styles.mainImage}
-              src={upperData.photo[mainImageIndex]}
-              alt={upperData.title}
-            />
-          </div>
-          <div className={styles.content} style={{ textAlign: "justify", fontWeight: "1400" }}>
-            {formatContent(upperData.content)}
-          </div>
-        </div>
-      </div>
+        </>
+      )}
       <>
         <h1 style={{ textAlign: "center" }}>Related Products</h1>
         <div className={styles.cardcontainer}>
-          {loadingRelated ? ( // Show loading indicator while related products are being fetched
+          {loadingRelated ? (
             <p>Loading...</p>
           ) : (
             lowerData.map((item) => (
@@ -120,122 +163,3 @@ const PermaLink = ({ permaLink, upperData, lowerData, Categories }) => {
 };
 
 export default PermaLink;
-const fetchUpperImageUrls = async (photoUrls) => {
-  try {
-    const upperImageUrls = await Promise.all(
-      photoUrls.map(async (photoUrl) => {
-        const imageRef = ref(storage, photoUrl);
-        return getDownloadURL(imageRef);
-      })
-    );
-    return upperImageUrls;
-  } catch (error) {
-    console.error("Error fetching upper image URLs:", error);
-    return [];
-  }
-};
-
-// Fetching image URLs from Firebase Storage for lowerData
-const fetchLowerImageUrls = async (items) => {
-  try {
-    const lowerImageUrls = await Promise.all(
-      items.map(async (item) => {
-        const imageRef = ref(storage, item.photo[0]);
-        return getDownloadURL(imageRef);
-      })
-    );
-    return lowerImageUrls;
-  } catch (error) {
-    console.error("Error fetching lower image URLs:", error);
-    return [];
-  }
-};
-
-export async function getServerSideProps(context) {
-  const { params } = context;
-  const { permaLink } = params;
-
-  try {
-    // const url ="https://www.api.woxnpackagingsolution.com/";
-    const url =process.env.NEXT_PUBLIC_APIVAL;
-    const responseUpper = await fetch(
-      `${url}data/head/permalink/${permaLink}`
-    );
-  
-    const upperData = await responseUpper.json();
-console.log(upperData)
-    const responseLower = await fetch(
-      `${url}data/category/${permaLink}`
-    );
-   
-    const lowerData = await responseLower.json();
-
-    const categoriesResponse = await fetch(`${url}data/all-category`);
-
-    if (!categoriesResponse.ok) {
-      throw new Error(`Failed to fetch categories data. Status: ${categoriesResponse.status}`);
-    }
-
-    const Categories = await categoriesResponse.json();
-   // Fetching image URLs for upperData and lowerData
-   const upperImageUrls = await fetchUpperImageUrls(upperData.photo);
-   const lowerImageUrls = await fetchLowerImageUrls(lowerData);
-
-   // Updating the upperData object with image URLs
-   const updatedUpperData = {
-     ...upperData,
-     photo: upperImageUrls
-   };
-
-   // Updating the lowerData array with image URLs
-  //  const updatedLowerData = lowerData.map((item, index) => ({
-  //    ...item,
-  //    photo: [lowerImageUrls[index]]
-  //  }));
-    // Fetching image URLs from Firebase Storage for upperData
-    // const upperImageUrls = await Promise.all(
-    //   upperData.photo.map(async (photoUrl) => {
-    //     const imageRef = ref(storage, photoUrl);
-    //     return getDownloadURL(imageRef);
-    //   })
-    // );
-
-    // // Fetching image URLs from Firebase Storage for lowerData
-    // const lowerImageUrls = await Promise.all(
-    //   lowerData.map(async (item) => {
-    //     const imageRef = ref(storage, item.photo[0]);
-    //     return getDownloadURL(imageRef);
-    //   })
-    // );
-
-    // // Updating the upperData object with image URLs
-    // const updatedUpperData = {
-    //   ...upperData,
-    //   photo: upperImageUrls
-    // };
-
-    // Updating the lowerData array with image URLs
-    const updatedLowerData = lowerData.map((item, index) => ({
-      ...item,
-      photo: [lowerImageUrls[index]]
-    }));
-
-    return {
-      props: {
-        permaLink,
-       upperData:updatedUpperData,
-        lowerData:updatedLowerData,
-        Categories
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return {
-      props: {
-        permaLink,
-        upperData: null,
-        lowerData: null,
-      },
-    };
-  }
-}

@@ -30,7 +30,7 @@ const index = ({ carouselData  }) => {
       <Banner />
       <Patners />
       <Enquire />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

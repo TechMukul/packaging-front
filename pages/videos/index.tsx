@@ -38,6 +38,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ Categories }) => {
     };
 
     return () => {
+      // <Navbar />
       // Clean up
       if (player.current) {
         player.current.destroy();
@@ -60,6 +61,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ Categories }) => {
 
   return (
     <>
+    <Navbar />
       <Head>
         <title>Our Videos</title>
         <meta name="description" content="We are machines manufacturer" />

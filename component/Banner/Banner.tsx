@@ -1,10 +1,10 @@
 import React from "react";
  // Import CSS file for styling
-import man from "../../public/image/man.png";
-import earth from "../../public/image/earth.png";
-import medal from "../../public/image/medal.png";
-import building from "../../public/image/building.png";
-import world from "../../public/image/world.png";
+import man from "../../public/image/man.svg";
+import earth from "../../public/image/earth.svg";
+import medal from "../../public/image/medal.svg";
+import building from "../../public/image/building.svg";
+import world from "../../public/image/world.svg";
 import Image from "next/image";
 import styles from "./index.module.scss";
 const Banner = () => {

@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./index.module.scss"; // Import CSS file for styling
 
 import Image from "next/image";
-import divider from '../../public/image/divider.png'
-import dividertom from '../../public/image/dividertom.webp'
+import divider from '../../public/image/divider.svg'
+import dividertom from '../../public/image/dividertom.svg'
 
 const Content = () => {
   return (

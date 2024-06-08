@@ -39,7 +39,7 @@ const Index: React.FC = () => {
         console.log("data", data);
 
         // Convert gs URLs to HTTPS URLs for the first 4 images
-        const categoriesWithHttpsUrls = await Promise.all(data.slice(0, 4).map(async (category) => {
+        const categoriesWithHttpsUrls = await Promise.all(data.map(async (category) => {
           const httpsUrl = await getDownloadURL(ref(storage, category.photo));
           return { ...category, photo: httpsUrl };
         }));

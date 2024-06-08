@@ -42,7 +42,7 @@ const Navbar = () => {
   };
   if(showMenu===true){
     return(<>
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "20px 0" }}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
     <div style={{ width: "100%", maxWidth: "400px", textAlign: "center" }}>
         <Image
           src={image}

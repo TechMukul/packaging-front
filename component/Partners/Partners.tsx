@@ -84,10 +84,12 @@ const Patners = () => {
   }, []);
 
   return (
-    <div className={styles.featuredproducts}>
-    <h2 className={styles.featuredheading}>OUR LEADING CLIENTS</h2>
+    <div className={styles.featuredproducts} style={{marginTop:"40px"}}>
+    
     <div className={styles.partnercards}>
+    <h2 className={styles.featuredheading}>OUR LEADING CLIENTS</h2>
       <div className={styles.partnercardwrapper}>
+        
         {products.map((product, index) => (
           <div key={index} className={`${styles.partnercard} ${index === currentIndex ? 'active' : ''}`}>
             <img src={product.image} alt={`partner ${product.id}`}  />

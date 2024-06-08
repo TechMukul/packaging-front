@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import Homepage from './Homepage';
 import Head from 'next/head';
 import axios from 'axios';
+import Homepage from './Homepage';
 
 const Index = () => {
   const [carouselData, setCarouselData] = useState(null);
-  // const [Categories, setCategories] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [url] = useState("https://www.api.woxnpackagingsolution.com/");
 
   useEffect(() => {
-
     const fetchCategoriesData = async () => {
-   
+      try {
+        const response = await axios.get(`${url}data/all-category`);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories data:", error);
+      }
     };
+
     const fetchCarouselData = async () => {
       try {
         const response = await axios.get(`${url}carousels/all-carousel`);
@@ -22,12 +27,10 @@ const Index = () => {
       }
     };
 
-   
-
+    fetchCategoriesData();
     fetchCarouselData();
-
   }, [url]);
-// console.log(Categories)
+
   return (
     <>
       <Head>
@@ -36,7 +39,7 @@ const Index = () => {
         {/* Additional meta tags, stylesheets, etc. */}
       </Head>
       <div>
-        <Homepage  carouselData={carouselData} />
+        <Homepage carouselData={carouselData} categories={categories} />
       </div>
     </>
   );

@@ -5,7 +5,7 @@ import Categories from "../../component/Categories/Categories";
 import Feature from "../../component/Featuredproduct/Feature";
 import Banner from "../../component/Banner/Banner";
 import Enquire from "../../component/Enquire/Enquire";
-import Patners from "../../component/Partners/Partners";
+import Partners from "../../component/Partners/Partners";
 import Footer from "../../component/Footer/Footer";
 import WhatsApp from "../../component/whatsapp/whatsapp";
 import Search from "../../component/Search/Search";
@@ -13,8 +13,8 @@ import Search from "../../component/Search/Search";
 // Lazy load the Carousel component
 const LazyCarousel = lazy(() => import("../../component/Carousel/Carousel"));
 
-const index = ({ carouselData  }) => {
-  // console.log("cccc",carouselData);
+const Homepage = ({ carouselData, categories }) => {
+  console.log(categories)
   return (
     <div style={{ backgroundColor: "whitesmoke" }}>
       <Navbar />
@@ -25,16 +25,14 @@ const index = ({ carouselData  }) => {
       </Suspense>
       <WhatsApp />
       <Content />
-      {/* <Categories category={Category}/> */}
+      <Categories />
       <Feature />
       <Banner />
-      <Patners />
+      <Partners />
       <Enquire />
       {/* <Footer /> */}
     </div>
   );
 };
 
-export default index;
-
-
+export default Homepage;

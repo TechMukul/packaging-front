@@ -5,10 +5,10 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerleft}>
-        <h3>Company Address</h3>
-        <p>123 Street Name,</p>
-        <p>City, State, ZIP Code</p>
-        <p>Country</p>
+        <h3>WOXN PACKAGING SOLUTION PVT. LTD.</h3>
+        <p>Site II, 12/46 Sunrise Industrial Area,</p>
+        <p>Loni Rd, Mohan Nagar, Ghaziabad,</p>
+        <p>Uttar Pradesh 201007,India</p>
       </div>
       <div className={styles.footerright}>
         <h3>Company Location</h3>

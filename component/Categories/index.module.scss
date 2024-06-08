@@ -1,89 +1,93 @@
 .categories {
-    position: relative;
-    overflow: hidden;
-    padding: 20px;
-    background: url('https://img.freepik.com/premium-photo/finance-equipment-leasing_87720-147873.jpg?w=1060') center center fixed; /* Background image */
-    background-size: cover;
-  }
-  
-  .categories:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Black overlay */
-    z-index: -1;
-  }
-  
-  .categoriesheading {
-    text-align: center;
-    font-size: 24px;
-    color: white; /* Text color */
-    font-weight: 900;
-  }
-  
-  .categorycards {
-    display: flex;
-    flex-wrap: wrap;
-    height: auto;
-    justify-content: space-between; /* Adjust the spacing between cards */
-  }
-  
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  background: url('https://img.freepik.com/premium-photo/finance-equipment-leasing_87720-147873.jpg?w=1060') center center fixed; /* Background image */
+  background-size: cover;
+}
+
+.categories:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Black overlay */
+  z-index: -1;
+}
+
+.categoriesheading {
+  text-align: center;
+  font-size: 24px;
+  color: white; /* Text color */
+  font-weight: 900;
+}
+
+.categorycards {
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+  justify-content: space-between; /* Adjust the spacing between cards */
+}
+
+.categorycard {
+  flex: 1 0 calc(25% - 20px); /* Adjust the width of each card */
+  margin: 10px; /* Adjust the margin */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 19%;
+  background-color: white; /* Card background color */
+}
+
+.categoryimage {
+  width: 100%;
+  min-height: 220px;
+  height: auto;
+  border-radius: 8px;
+  background-color: grey;
+  margin-bottom: 10px;
+}
+
+.categorydescription {
+  font-size: 16px;
+  color: #666;
+}
+
+.centeredbutton {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.viewallbutton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: white;
+  color: blue;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.viewallbutton:hover {
+  background-color: blue;
+  color: white; /* Darker shade of blue */
+}
+
+.dividersmall {
+  border: none;
+  border-top: 2px solid white; /* Choose your desired color */
+  width: 10%; /* Adjust width as needed */
+  margin: 0 auto;
+}
+
+@media (max-width: 720px) {
   .categorycard {
-    flex: 1 0 calc(25% - 20px); /* Adjust the width of each card */
-    margin: 10px; /* Adjust the margin */
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    text-align: center;
-    max-width: 19%;
-    background-color: white; /* Card background color */
+    flex: 1 0 100%; /* Full width on mobile */
+    max-width: 85%; /* Ensure it doesn't exceed 100% */
+    // margin: 10px 0; /* Adjust the margin for vertical spacing */
   }
-  
-  .categoryimage {
-    width: 100%;
-    min-height: 250px;
-    height: auto;
-    border-radius: 8px;
-    background-color: grey;
-    margin-bottom: 10px;
-  }
-  
-  .categorydescription {
-    font-size: 16px;
-    color: #666;
-  } 
-  .centeredbutton {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .viewallbutton {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color:white;
-    color: blue;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .viewallbutton:hover {
-    background-color:blue;
-    color: white; /* Darker shade of blue */
-  }
-  .dividersmall {
-    border: none;
-    border-top: 2px solid white; /* Choose your desired color */
-    width: 10%; /* Adjust width as needed */
-    margin: 0 auto;
-  }
-  @media (max-width: 720px) {
-    .categorycard {
-      flex: 1 0 calc(100% - 4%);
-      margin: 2%;
-    }
-  }
+}

@@ -55,9 +55,9 @@ const Banner = () => {
               OUR GLOBAL FOOTPRINT
             </h1>
             <p style={{ textAlign: "justify", padding: "5%" }}>
-              Over the last 36+ years, the company has successfully installed
-              and commissioned over 1500+ food processing and packaging units
-              worldwide in over 30+ countries across Asia, Africa, and Americas.
+              Over the last 20+ years, the company has successfully installed
+              and commissioned over 1000+ food processing and packaging units
+              worldwide in over 28+ countries across Asia, Africa, and Americas.
               {/* <Image src={world} alt="world"></Image> */}
             </p>
           </div>{" "}
@@ -65,7 +65,7 @@ const Banner = () => {
             <Image
               src={world}
               alt="world"
-              style={{ marginTop: "60px",width:"90%",height:"auto" }}
+              style={{width:"90%",height:"auto" }}
             ></Image>
           </div>
           <div className="image-container">

@@ -5,6 +5,8 @@ import Link from "next/link";
 import Navbar from "../../component/Navbar/Navbar";
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from 'firebase/app';
+import Loading from "../Loading";
+import Image from "next/image";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD3NQqtRWs1weSryxTCjpoGgLn-l5KdjQM",
@@ -16,7 +18,9 @@ const firebaseConfig = {
   measurementId: "G-8HF5CJ9Y3Q"
 };
 
-const storage = getStorage(initializeApp(firebaseConfig));
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
 const PermaLink = ({ Categories }) => {
   const router = useRouter();
@@ -25,7 +29,6 @@ const PermaLink = ({ Categories }) => {
   const [upperData, setUpperData] = useState<any>(null);
   const [lowerData, setLowerData] = useState<any>([]);
   const [loadingRelated, setLoadingRelated] = useState<any>(true);
-  const [mainImageIndex, setMainImageIndex] = useState<any>(0);
 
   useEffect(() => {
     const fetchPermaLinkData = async () => {
@@ -37,13 +40,9 @@ const PermaLink = ({ Categories }) => {
         const responseLower = await fetch(`${url}data/category/${permaLink}`);
         const lowerData = await responseLower.json();
 
-        const upperImageUrls = await fetchImageUrls(upperData.photo);
         const lowerImageUrls = await fetchImageUrls(lowerData.map(item => item.photo[0]));
 
-        setUpperData({
-          ...upperData,
-          photo: upperImageUrls
-        });
+        setUpperData(upperData);
         setLowerData(
           lowerData.map((item, index) => ({
             ...item,
@@ -60,13 +59,14 @@ const PermaLink = ({ Categories }) => {
       fetchPermaLinkData();
     }
   }, [permaLink]);
- 
+
   const fetchImageUrls = async (photoUrls) => {
     try {
       const imageUrls = await Promise.all(
         photoUrls.map(async (photoUrl) => {
           const imageRef = ref(storage, photoUrl);
-          return getDownloadURL(imageRef);
+          const url = await getDownloadURL(imageRef);
+          return url.replace(/^http:\/\//i, 'https://'); // Replace http with https
         })
       );
       return imageUrls;
@@ -75,12 +75,9 @@ const PermaLink = ({ Categories }) => {
       return [];
     }
   };
+
   const formatTitle = (link) => {
     return link.replace(/-/g, " ").toUpperCase();
-  };
-  
-  const handleThumbnailClick = (index) => {
-    setMainImageIndex(index);
   };
 
   const formatContent = (content) => {
@@ -88,7 +85,7 @@ const PermaLink = ({ Categories }) => {
       const [title, ...paragraphs] = section.split("\n");
       return (
         <div key={index} className={styles.section}>
-          <p className={styles.paragraph}>{title}</p>
+          <p className={styles.sectionTitle}>{title}</p>
           {paragraphs.map((paragraph, idx) => (
             <p key={idx} className={styles.paragraph}>
               {paragraph}
@@ -104,60 +101,43 @@ const PermaLink = ({ Categories }) => {
     <>
       <Navbar />
       {upperData && (
-        <>
-          <h1 className={styles.title} style={{ textAlign: "center", fontWeight: "bold", fontFamily: "" }}>
-            {upperData && formatTitle(upperData.title)}
-          </h1>
-          <div className={styles.container}>
-            <div className={styles.upperSection}>
-              <div className={styles.thumbnailContainer}>
-                {upperData.photo.map((image, index) => (
-                  <img
-                    key={index}
-                    className={`${styles.thumbnail} ${index === mainImageIndex ? styles.activeThumbnail : ''}`}
-                    src={image}
-                    alt={`${upperData.title} ${index + 1}`}
-                    onClick={() => handleThumbnailClick(index)}
-                  />
-                ))}
-              </div>
-              <div className={styles.leftSection}>
-                <img
-                  className={styles.mainImage}
-                  src={upperData.photo[mainImageIndex]}
-                  alt={upperData.title}
-                />
-              </div>
-              <div className={styles.content} style={{ textAlign: "justify", fontWeight: "1400" }}>
+        <div className={styles.container}>
+          <div className={styles.upperSection}>
+            <div className={styles.bannerImageContainer}>
+              <Image
+                className={styles.bannerImage}
+                src={upperData.photo[0]}
+                alt={upperData.title}
+                width={100}
+                height={200}
+              />
+              <div className={styles.content}>
                 {formatContent(upperData.content)}
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
-      <>
-        <h1 style={{ textAlign: "center" }}>Related Products</h1>
-        <div className={styles.cardcontainer}>
-          {loadingRelated ? (
-            <p>Loading...</p>
-          ) : (
-            lowerData.map((item) => (
-              <Link href={`/singlepage/${item.permaLink}`} key={item._id}>
-                <div className={styles.card}>
-                  <img
-                    className={styles.image}
-                    src={item.photo[0]}
-                    alt={item.title}
-                  />
-                  <div className={styles.cardContent}>
-                    <h1 className={styles.cardTitle}>{item.title}</h1>
-                  </div>
+      <div className={styles.cardContainer}>
+        {loadingRelated ? (
+          <Loading />
+        ) : (
+          lowerData.map((item) => (
+            <Link href={`/singlepage/${item.permaLink}`} key={item._id} passHref>
+              <div className={styles.card}>
+                <img
+                  className={styles.image}
+                  src={item.photo[0]}
+                  alt={item.title}
+                />
+                <div className={styles.cardContent}>
+                  <h1 className={styles.cardTitle}>{item.title}</h1>
                 </div>
-              </Link>
-            ))
-          )}
-        </div> 
-      </>
+              </div>
+            </Link>
+          ))
+        )}
+      </div>
     </>
   );
 };

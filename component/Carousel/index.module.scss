@@ -1,31 +1,91 @@
 .carousel-container {
   position: relative;
   width: 100%;
+  margin-top: 80px;
   overflow: hidden;
-  max-height: 500px;
-  height: auto;
-  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.animate-pop {
+  animation: pop 0.5s ease forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .carousel-slide {
-  display: flex;
-  transition: transform 0.5s ease;
   position: relative;
-  height: 100%; /* Ensure the carousel-slide takes the full height */
+  width: 100%;
+  display: flex;
+  transition: transform 0.5s ease-in-out;
 }
 
-.carousel-slide img {
-  flex: 0 0 100%;
-  max-width: 100%;
-  height: auto;
-  opacity: 0; /* Initially hide all images */
-  transition: opacity 0.5s ease;
-  position: absolute; /* Position images on top of each other */
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 450px; /* Adjust height based on your design */
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  color: white; /* Set text color to white */
 }
 
-.carousel-slide img.active {
-  opacity: 1; /* Show the active image */
-  position: relative; /* Ensure active image is positioned normally */
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  position: relative;
+}
+
+.text-overlay {
+  position: absolute;
+  // top: 50%;
+  // left: 50%; 
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-container {
+  // background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.title {
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+}
+
+.lines-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.line {
+  font-size: 2rem;
+  font-family: "gilmer", sans-serif;
+  margin-bottom: 5px;
 }
 
 .arrow-button {
@@ -43,11 +103,11 @@
 }
 
 .arrow-button.prev {
-  left: 0;
+  left: 10px;
 }
 
 .arrow-button.next {
-  right: 0;
+  right: 10px;
 }
 
 .indicators {
@@ -55,6 +115,8 @@
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
 }
 
 .indicators span {
@@ -63,10 +125,47 @@
   height: 10px;
   background-color: #ccc;
   border-radius: 50%;
-  margin: 0 5px;
   cursor: pointer;
 }
 
 .indicators span.active {
   background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .arrow-button {
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  .carousel-item {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    margin-top: 20px;
+  }
+
+  .arrow-button {
+    font-size: 16px;
+    padding: 6px;
+  }
+
+  .carousel-item {
+    height: 200px;
+  }
+
+  .text-container {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .line {
+    font-size: 0.9rem;
+  }
 }

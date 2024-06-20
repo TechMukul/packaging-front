@@ -1,34 +1,223 @@
 .footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+  background-color: #f0f0f0;
+  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  color: white;
+  background-color: #0056b3;
+}
+
+.footerleft,
+.footerright {
+  flex: 1;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.footercenter {
+  flex: 0.2;
+}
+
+.footerleft h3,
+.footercenter h3,
+.footerright h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-family: "gilmer", sans-serif;
+}
+
+.footerleft p {
+  margin: 5px 0;
+  font-family: "gilmer", sans-serif;
+  line-height: 1.6;
+}
+
+.footercenter {
+  display: flex;
+  flex-direction: column;
+  font-family: "gilmer", sans-serif;
+  align-items: center;
+}
+
+.footercenter h1 {
+  font-size: 1.5rem; /* Adjust as needed */
+  margin-bottom: 10px;
+  font-family: "gilmer", sans-serif;
+}
+
+.quickLinks {
+  list-style: none;
+  padding: 0;
+  font-family: "gilmer", sans-serif;
+  text-align: left;
+}
+
+.quickLinks li {
+  margin-bottom: 8px;
+  font-family: "gilmer", sans-serif;
+}
+
+.quickLinks .link {
+  display: inline-block;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  font-family: "gilmer", sans-serif;
+}
+
+.logo {
+  margin-bottom: 15px;
+  margin-top: 30px;
+}
+
+.socialLinks {
+  display: flex;
+  text-align: left;
+  font-family: "gilmer", sans-serif;
+  width: 80%;
+  gap: 10px;
+}
+
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 40px;
+  background-color: #fff; /* White background for icons */
+  border-radius: 5px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.socialIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.socialIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mapcontainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mapoverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mapcontainer:hover .mapoverlay {
+  opacity: 1;
+}
+
+.mapcontainer iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.mapinfo {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  color: white;
+  font-family: "gilmer", sans-serif;
+}
+
+.mapicon {
+  width: 40px;
+  height: 40px;
+  background-color: #2196f3;
+  mask-image: url("/path/to/your-icon.svg");
+  mask-size: cover;
+  margin-right: 10px;
+}
+
+.maptext {
+  display: flex;
+  flex-direction: column;
+}
+
+.maptext p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.maptext .link {
+  color: white;
+  font-family: "gilmer", sans-serif;
+}
+
+.scanners {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 0%;
+    flex-direction: column;
+    width: 122%;
+    align-items: center;
   }
-  
-  .footerleft, .footerright {
-    flex: 1;
+
+  .footerleft,
+  .footercenter,
+  .footerright {
+    text-align: center;
+    margin-bottom: 20px;
   }
-  
-  .googlemapcontainer {
+
+  .footerleft p,
+  .quickLinks li {
+    text-align: center;
+  }
+
+  .socialLinks {
+    justify-content: center;
     width: 100%;
-    padding-bottom: 56.25%; /* Aspect ratio 16:9 */
-    position: relative;
   }
-  
-  .googlemapcontainer iframe {
-    position: absolute;
-    width: 90%;
-    border: 1px solid black;
-    height: 100%;
+
+  .mapcontainer {
+    height: 200px;
   }
-  
-  @media only screen and (max-width: 768px) {
-    .footer {
-      flex-direction: column;
-    }
-    
-    .googlemapcontainer {
-      width: 100%;
-    }
+}
+
+@media (max-width: 480px) {
+  .footerleft h3,
+  .footercenter h1,
+  .footerright h2 {
+    font-size: 1.2rem;
   }
-  
+
+  .mapinfo p {
+    font-size: 1rem;
+  }
+
+  .mapcontainer {
+    height: 150px;
+  }
+}

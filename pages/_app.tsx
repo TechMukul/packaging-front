@@ -2,8 +2,10 @@ import React from 'react';
 import App from 'next/app';
 import Footer from "../component/Footer/Footer";
 import Navbar from "../component/Navbar/Navbar";
+
 // import '../styles/globals.scss'; // Adjust the path accordingly
 import dotenv from 'dotenv';
+import styles from './index.module.scss'
 
 dotenv.config();
 class MyApp extends App {
@@ -19,7 +21,7 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <div>
+      <div >
         {/* <Navbar Categories={pageProps.Categories} /> */}
         <Component {...pageProps} />
         <Footer />

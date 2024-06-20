@@ -4,9 +4,11 @@
 }
 
 .featuredheading {
-  font-size: 24px;
+  font-size:30px;
   margin-bottom: 20px;
+  color: #0056b3;
   font-weight: 700;
+  font-family: "gilmer", sans-serif;
 }
 
 .productcards {
@@ -19,7 +21,7 @@
   flex: 1 0 calc(20% - 20px);
   margin: 10px;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 2px solid black;
   border-radius: 8px;
   text-align: center;
   background-color: white;
@@ -31,12 +33,57 @@
 }
 
 .productimage {
-  width: 100%;
+  width: 90%;
   border-radius: 8px;
   margin-bottom: 10px;
+  border: 2px solid black;
 }
 
 .productdescription {
   font-size: 14px;
-  color: #666;
+  color: black;
+  font-family: "gilmer", sans-serif;
+}
+
+.button {
+  display: inline-block;
+  border: 2px solid black;
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  background-color: #FFA500;
+  // border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: width 0.3s, height 0.3s;
+  border-radius: 50%;
+}
+
+.button:hover::before {
+  width: 0;
+  height: 0;
+}
+
+.button:hover {
+  background-color: #FFA500;
+  color: white;
+  transform: scale(1.05);
 }

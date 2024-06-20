@@ -1,0 +1,71 @@
+/* Client.module.scss */
+
+.clientContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 40px 20px;
+    background: #0056b3;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin: 40px 0;
+    transition: transform 0.3s ease;
+  }
+  
+  .clientContainer:hover {
+    transform: scale(1.02);
+  }
+  
+  .stat {
+    flex: 1;
+    margin: 20px;
+    text-align: center;
+    padding: 30px 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .stat:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .iconContainer {
+    background: #0056b3 ;
+    border-radius: 50%;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+  
+  .icon {
+    font-size: 3em;
+    color: #fff;
+    transition: transform 0.3s ease;
+  }
+  
+  .stat:hover .icon {
+    transform: scale(1.2);
+  }
+  
+  .countContainer {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .label {
+    font-size: 1.2em;
+    color: #777;
+  }
+  
+  @media (max-width: 768px) {
+    .stat {
+      flex: 1 1 100%;
+      margin: 10px 0;
+    }
+  }
+  

@@ -1,7 +1,6 @@
-/* video.module.scss */
 .container {
   padding: 20px;
-  max-width: 100%;
+  max-width: 1200px; /* Adjusted max-width for better responsiveness */
   margin: 0 auto;
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -9,6 +8,7 @@
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  margin-top: 80px;
 }
 
 .logo {
@@ -43,7 +43,7 @@
 .videoWrapper {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 100%; /* Allow video to take full container width */
   margin: 20px auto;
   overflow: hidden;
   border-radius: 10px;
@@ -62,15 +62,15 @@
 
 .iframeContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center; /* Center align the iframes */
+  flex-wrap: wrap; /* Allow iframes to wrap when necessary */
+  gap: 20px; /* Gap between iframes */
 }
 
 .iframeContainer iframe {
-  width: 100%;
-  max-width: 560px;
+  width: calc(50% - 20px); /* Set each iframe to occupy half of the container width with gap */
+  max-width: 560px; /* Limit max-width to prevent iframes from becoming too large */
   height: 315px;
-  margin-bottom: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

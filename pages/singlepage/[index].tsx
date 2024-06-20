@@ -15,10 +15,11 @@ const firebaseConfig = {
   messagingSenderId: "727828228447",
   appId: "1:727828228447:web:554b313dcd3df6c67a6eea",
   measurementId: "G-8HF5CJ9Y3Q",
-};const PermaLink = () => {
-  const [Categories, setCategories] = useState<any>(null); // State for categories
+};
+
+const PermaLink = () => {
   const [mainImage, setMainImage] = useState<any>(null);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0); // State for selected index
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
   const { index } = router.query;
 
@@ -49,7 +50,7 @@ const firebaseConfig = {
     }
   }, [index]);
 
-  const handleThumbnailClick = (index) => {
+  const handleThumbnailClick = (index: number) => {
     setSelectedIndex(index);
   };
 
@@ -65,7 +66,7 @@ const firebaseConfig = {
         {mainImage ? (
           <>
             <div className={styles["thumbnail-container"]}>
-              {mainImage.photo.map((item, index) => (
+              {mainImage.photo.map((item: string, index: number) => (
                 <img
                   key={index}
                   src={item}
@@ -105,6 +106,7 @@ const firebaseConfig = {
                       ([key, value], index) => (
                         <tr key={index}>
                           <td>{key}</td>
+                          <td>{value as string}</td>
                         </tr>
                       )
                     )}

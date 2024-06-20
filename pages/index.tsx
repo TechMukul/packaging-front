@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import Homepage from './Homepage';
+import favi from '../public/image/favi.png';
+import styles from './index.module.scss'
 
 const Index = () => {
   const [carouselData, setCarouselData] = useState(null);
@@ -32,16 +34,17 @@ const Index = () => {
   }, [url]);
 
   return (
-    <>
+    <div className={styles.container}>
       <Head>
         <title>Woxn Packaging Solutions</title>
         <meta name="description" content="We are machines manufacturer" />
+        <link rel="icon" href={favi.src} /> {/* Use the src property */}
         {/* Additional meta tags, stylesheets, etc. */}
       </Head>
-      <div>
+      <div >
         <Homepage carouselData={carouselData} categories={categories} />
       </div>
-    </>
+    </div>
   );
 };
 

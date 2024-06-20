@@ -1,78 +1,47 @@
 import React from "react";
- // Import CSS file for styling
-import man from "../../public/image/man.svg";
-import earth from "../../public/image/earth.svg";
-import medal from "../../public/image/medal.svg";
-import building from "../../public/image/building.svg";
-import world from "../../public/image/world.svg";
 import Image from "next/image";
+import { useInView } from "react-intersection-observer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGavel,
+  faIndustry,
+  faGlobe,
+  faChartLine,
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "./index.module.scss";
+
+// Import your background image
+import bgImage from "../../public/image/bg.png";
+
 const Banner = () => {
+  const [inViewRef, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+console.log(bgImage)
   return (
     <>
-      <div className={styles.banner}>
-        <div className={styles.bannercontent}>
-          <div className={styles.content}>
-            <Image src={man} alt="" className={styles.img} style={{}}></Image>
-            <p className={styles.para} style={{}}>1500 + Happy Customer Worldwide</p>
-          </div>
-          <div className={styles.content}>
-            <Image src={earth} alt="" className={styles.img}  style={{}}></Image>
-            <p className={styles.para}>
-              25+ Countries Worldwide
+      <div className={styles.banner} style={{ backgroundImage: `${bgImage}` }}>
+        <div className={styles.bannerContent2} ref={inViewRef}>
+          <div className={styles.content2}>
+            <h1 className={styles.heading}><u>OUR GLOBAL FOOTPRINT </u></h1>
+            <p className={styles.text}>
+              Over the last 20+ years, our company has successfully installed
+              and commissioned over 1000+ state-of-the-art food processing and
+              packaging units worldwide. With a significant presence in more
+              than 28 countries across Asia, Africa, and the Americas, we have
+              established ourselves as a global leader in the industry. Our
+              commitment to innovation and excellence ensures that each unit
+              delivers top-notch performance, meeting the diverse needs of our
+              clients. By leveraging cutting-edge technology and a dedicated
+              team of experts, we continue to set new benchmarks in food
+              processing and packaging, driving growth and sustainability across
+              the globe.
             </p>
-          </div>
-          <div className={styles.content}>
-            <Image src={medal} alt="" className={styles.img}  style={{}}></Image>
-            <p className={styles.para}>
-              20 + Years of Excellence
-            </p>
-          </div>
-          <div className={styles.content} style={{ height: "40px", width: "100%" }}>
-            <Image src={building} alt="" className={styles.img}  style={{}}></Image>
-            <p className={styles.para}>
-              10 + Sales and Service Centres Worldclass
-            </p>
-          </div>
-          <div className={styles.imagecontainer}>
-            {/* <img src="banner-image.jpg" alt="Banner" />    */}
           </div>
         </div>
       </div>
-      <div className={styles.banner2}>
-        <div className={styles.bannercontent2}>
-          <div className={styles.content2}>
-            <h1
-              style={{
-                fontWeight: "bold",
-                fontSize: "30px",
-                color: "rgb(37, 150, 190) ",
-                margin: "auto",
-                marginTop: "50px",
-                marginLeft: "30px",
-              }}
-            >
-              OUR GLOBAL FOOTPRINT
-            </h1>
-            <p style={{ textAlign: "justify", padding: "5%" }}>
-              Over the last 20+ years, the company has successfully installed
-              and commissioned over 1000+ food processing and packaging units
-              worldwide in over 28+ countries across Asia, Africa, and Americas.
-              {/* <Image src={world} alt="world"></Image> */}
-            </p>
-          </div>{" "}
-          <div className={styles.content2}>
-            <Image
-              src={world}
-              alt="world"
-              style={{width:"90%",height:"auto" }}
-            ></Image>
-          </div>
-          <div className="image-container">
-            {/* <img src="banner-image.jpg" alt="Banner" />    */}
-          </div>
-        </div>
-      </div>
+      <div className={styles.banner2}></div>
     </>
   );
 };

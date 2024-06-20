@@ -1,59 +1,81 @@
 .categories {
-  position: relative;
-  overflow: hidden;
-  padding: 20px;
-  background: url('https://img.freepik.com/premium-photo/finance-equipment-leasing_87720-147873.jpg?w=1060') center center fixed; /* Background image */
+  // padding: 20px;
   background-size: cover;
-}
-
-.categories:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Black overlay */
-  z-index: -1;
+  position: relative;
+  height: auto;
+  overflow: hidden;
+  background: url("https://media.licdn.com/dms/image/C4D12AQHOyG5wmDqacQ/article-cover_image-shrink_720_1280/0/1593667513815?e=2147483647&v=beta&t=mM0WEUvQ2KOB3b-a-f4YSDmufIcmjozfTRUU4IRXfeU");
 }
 
 .categoriesheading {
   text-align: center;
-  font-size: 24px;
-  color: white; /* Text color */
-  font-weight: 900;
+  font-size: 40px;
+  margin-top: 0;
+  color: white;
+  font-weight: bolder;
+}
+
+.ranges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-weight: bolder;
+  font-size: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+.dividersmall {
+  border: none;
+  border-top: 4px solid white;
+  width: 10%;
+  // margin: 0 auto;
 }
 
 .categorycards {
   display: flex;
-  flex-wrap: wrap;
+  // overflow: hidden;
+  position: relative;
   height: auto;
-  justify-content: space-between; /* Adjust the spacing between cards */
+  justify-content: flex-start;
+  gap: 20px;
+  animation: slideRight 21s linear infinite; /* Apply slideRight animation */
 }
 
 .categorycard {
-  flex: 1 0 calc(25% - 20px); /* Adjust the width of each card */
-  margin: 10px; /* Adjust the margin */
+  flex: 1 0 19.5%;
   padding: 20px;
-  border: 1px solid #ccc;
   border-radius: 8px;
+  width: 100%;
   text-align: center;
-  max-width: 19%;
-  background-color: white; /* Card background color */
+  border: 4px solid black;
+  transition: transform 0.5s ease;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-family: "gilmer", sans-serif;
+}
+
+.categorycard:hover {
+  transform: scale(1.05);
 }
 
 .categoryimage {
   width: 100%;
-  min-height: 220px;
-  height: auto;
+  height: 200px;
   border-radius: 8px;
-  background-color: grey;
-  margin-bottom: 10px;
+  border: 3px solid black;
+  // object-fit: cover;
 }
 
 .categorydescription {
-  font-size: 16px;
-  color: #666;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+.link {
+  text-decoration: none;
 }
 
 .centeredbutton {
@@ -66,28 +88,116 @@
   padding: 10px 20px;
   font-size: 16px;
   background-color: white;
-  color: blue;
+  color: #0056b3;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .viewallbutton:hover {
-  background-color: blue;
-  color: white; /* Darker shade of blue */
+  background-color: #0056b3;
+  color: white;
 }
 
-.dividersmall {
+.arrowButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
   border: none;
-  border-top: 2px solid white; /* Choose your desired color */
-  width: 10%; /* Adjust width as needed */
-  margin: 0 auto;
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.middleCard {
+  flex: 1 0 40%;
+}
+
+.requestQuoteButton {
+  position: relative;
+  background-color: #FFA500;
+  border: none;
+  color: white;
+  text-align: center;
+  border: 2px solid black;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 10px 24px;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.requestQuoteButton:hover {
+  background-color: white;
+  color: black;
+}
+
+.requestQuoteButton:hover span {
+  width: 100%;
+}
+
+.requestQuoteButton span {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  background: #FFA500;
+  transition: width 0.3s;
+  border-radius: 8px;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 @media (max-width: 720px) {
   .categorycard {
-    flex: 1 0 100%; /* Full width on mobile */
-    max-width: 85%; /* Ensure it doesn't exceed 100% */
-    // margin: 10px 0; /* Adjust the margin for vertical spacing */
+    flex: 0 0 18%;
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    border: 4px solid black;
+    transition: transform 0.5s ease;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-family: "gilmer", sans-serif;
+  }
+  .categoryimage {
+    width: 100%;
+    height: 100px;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: 3px solid black;
+    object-fit: cover;
+    position: relative;
+  }
+  .categoriesheading {
+    text-align: center;
+    font-size: 20px;
+    color: white;
+    font-weight: bolder;
   }
 }

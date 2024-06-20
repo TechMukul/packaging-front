@@ -1,58 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import styles from './index.module.scss'; // Import CSS module
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { initializeApp } from 'firebase/app';
+import styles from './index.module.scss';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD3NQqtRWs1weSryxTCjpoGgLn-l5KdjQM",
-  authDomain: "woxnpackaging.firebaseapp.com",
-  projectId: "woxnpackaging",
-  storageBucket: "woxnpackaging.appspot.com",
-  messagingSenderId: "727828228447",
-  appId: "1:727828228447:web:554b313dcd3df6c67a6eea",
-  measurementId: "G-8HF5CJ9Y3Q"
-};
-interface CarouselData {
-  image: string;
-}
-type Props={
-  carouselData: CarouselData[];
-}
-// Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-const storage = getStorage(firebaseApp);
+const linesData = [
+  {
+    title: 'Tomato Ketchup Plant',
+    lines: [
+      'Efficient production of tangy ketchup.',
+      'Processing ripe tomatoes into condiments.',
+      'Automated ketchup manufacturing facility.'
+    ]
+  },
+  {
+    title: 'Fruit Juice Plant',
+    lines: [
+      'Extracting Juice from fresh Fruits.',
+      'High-capacity Fruit Juice operation.',
+      'Supplying Fruit Juice for processing.'
+    ]
+  },
+  {
+    title: 'Tin Can Packaging line',
+    lines: [
+      'Efficiently producing premium tomato puree.',
+      'Leveraging advanced pureeing and packaging technology.',
+      'Delivering high-quality puree from production to packaging.'
+    ]
+  },
+  {
+    title: 'Fruit & Vegetable dehydration',
+    lines: [
+      'Maintains essential nutrients and extends shelf life.',
+      'Easier and cheaper to transport and store.',
+      'Intensifies flavors for diverse culinary uses.'
+    ]
+  }
+];
 
-const Index = ({ carouselData }) => {
+const Carousel = ({ carouselData }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchImageUrls = async () => {
-      try {
-        const urls = await Promise.all(
-          carouselData.map(async (carousel) => {
-            const imageRef = ref(storage, carousel.image);
-            return getDownloadURL(imageRef);
-          })
-        );
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 4000); // Change slide every 4 seconds
 
-        setImageUrls(urls);
-      } catch (error) {
-        console.error('Error fetching image URLs:', error);
-      }
-    };
-
-    if (carouselData) {
-      fetchImageUrls();
-    }
-  }, [carouselData, storage]);
+    return () => clearInterval(interval);
+  }, [currentIndex, carouselData]);
 
   const nextSlide = () => {
+    if (!carouselData || carouselData.length === 0) return; // Guard clause
+
     setCurrentIndex((prevIndex) => (prevIndex === carouselData.length - 1 ? 0 : prevIndex + 1));
   };
 
   const prevSlide = () => {
+    if (!carouselData || carouselData.length === 0) return; // Guard clause
+
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? carouselData.length - 1 : prevIndex - 1));
   };
 
@@ -60,8 +64,8 @@ const Index = ({ carouselData }) => {
     setCurrentIndex(index);
   };
 
-  if (!carouselData || imageUrls.length !== carouselData.length) {
-    return <h1>Loading</h1>;
+  if (!carouselData || carouselData.length === 0) {
+    return <div className={styles['loading-text']}>Loading...</div>;
   }
 
   return (
@@ -70,15 +74,30 @@ const Index = ({ carouselData }) => {
         &#10094;
       </button>
       <div className={styles['carousel-slide']}>
-        {imageUrls.map((imageUrl, index) => (
-          <Image
-            key={carouselData[index]._id}
-            src={imageUrl}
-            alt={`Slide ${index}`}
-            width={600}
-            height={400}
-            className={index === currentIndex ? styles['active'] : styles['inactive']}
-          />
+        {carouselData.map((item, index) => (
+          <div
+            key={index}
+            className={`${styles['carousel-item']} ${index === currentIndex ? `${styles['active']} ${styles['animate-pop']}` : ''}`}
+          >
+            <div className={styles['image-container']}>
+              <Image
+                src={item.image}
+                alt={`Slide ${index}`}
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+            <div className={`${styles['text-overlay']} ${index === currentIndex ? styles['animate-pop'] : ''}`}>
+              <div className={styles['text-container']}>
+                <h2 className={`${styles['title']} ${index === currentIndex ? styles['animate-pop'] : ''}`}>{linesData[index].title}</h2>
+                <ul className={styles['lines-list']}>
+                  {linesData[index].lines.map((line, idx) => (
+                    <li key={idx} className={`${styles['line']} ${index === currentIndex ? styles['animate-pop'] : ''}`}>{line}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
       <button className={`${styles['arrow-button']} ${styles['next']}`} onClick={nextSlide}>
@@ -97,4 +116,4 @@ const Index = ({ carouselData }) => {
   );
 };
 
-export default Index;
+export default Carousel;

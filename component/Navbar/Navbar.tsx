@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
-import image from "../../public//image/WhatsApp Image 2024-05-21 at 7.46.54 AM.svg";
-import Gem from "../../public/image/Gem.jpg";
-import ISO from "../../public/image/ISO.jpg";
-import fb from "../../public/image/fb.svg";
-import insta from "../../public/image/insta.svg";
-import you from "../../public/image/you.png";
-import email from "../../public/image/email.svg";
-import phone from "../../public/image/whattt.svg";
-import threelines from "../../public/image/three lines.svg";
-import styles from "./index.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import axios from 'axios'
-// import email from '../../public/image/email.png'
-// import location from "../../public/image/location.png";
-const Navbar = () => {
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import styles from "./index.module.scss";
+import logo from "../../public/image/WhatsApp Image 2024-05-21 at 7.46.54 AM.svg";
+import threelines from "../../public/image/three lines.svg";
 
-  const [Categories, setCategories] = useState<any>(null);
+const Navbar = () => {
+  const [categories, setCategories] = useState<any[]>([]);
   const [url] = useState("https://www.api.woxnpackagingsolution.com/");
+  const [showMenu, setShowMenu] = useState<any>(false);
+  const [showAllCategories, setShowAllCategories] = useState<any>(false);
+  const [scrollDirection, setScrollDirection] = useState<any>("up");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<any[]>([]);
 
   useEffect(() => {
-
     const fetchCategoriesData = async () => {
       try {
         const response = await axios.get(`${url}data/all-category`);
@@ -29,51 +26,86 @@ const Navbar = () => {
         console.error("Error fetching categories data:", error);
       }
     };
-
     fetchCategoriesData();
   }, [url]);
-  const [showMenu, setShowMenu] = useState(false);
-  const [showAllCategories, setShowAllCategories] = useState(false);
+
+  useEffect(() => {
+    let lastScrollTop = 0;
+    const handleScroll = () => {
+      const currentScrollTop = window.pageYOffset;
+      if (currentScrollTop > lastScrollTop) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+      }
+      lastScrollTop = currentScrollTop;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
-  const toggleShowAllCategories = () => { 
+
+  const toggleShowAllCategories = () => {
     setShowAllCategories(!showAllCategories);
   };
-  if(showMenu===true){
-    return(<>
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-    <div style={{ width: "100%", maxWidth: "400px", textAlign: "center" }}>
-        <Image
-          src={image}
-          alt="pic"
-          style={{ width: "100%", height: "80px", objectFit: "contain" }}
-        />
-    </div>
-</div>
-<div style={{ padding: "0 20px" }}>
-    <ul style={{ listStyle: "none", padding: 0, margin: 0, textAlign: "center" }}>
-        <Link href={"/"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>Home</li></Link>
-        <Link href={"/allCategories"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>Product</li></Link>
-        <Link href={"/videos"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>Videos</li></Link>
-        <Link href={"/about"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>About us</li></Link>
-        <Link href={"/contactus"}><li style={{ padding: "10px 0", fontSize: "18px", borderBottom: "1px solid #ccc" }}>Contact Us</li></Link>
-    </ul>
-</div>
-</>
-)
-  }
+
+  useEffect(() => {
+    if (searchTerm.trim().length > 0) {
+      const filteredSuggestions = categories.filter((category) =>
+        category.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchTerm, categories]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchItemClick = (category: any) => {
+    setSearchTerm("");
+    console.log(`Selected category: ${category.name}`);
+    // Additional actions on item click (e.g., navigate to category page)
+  };
+
+  const renderSuggestions = () => {
+    if (suggestions.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className={styles.searchSuggestions}>
+        {suggestions.map((category) => (
+          <div
+            key={category._id}
+            className={styles.suggestion}
+            onClick={() => handleSearchItemClick(category)}
+          >
+            <Link key={category._id} href={`/category/${category.permaLink}`}>
+              {category.name}
+            </Link>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const renderCategoriesDropdown = () => {
     return (
       <div className={styles.dropdown}>
-        {Categories&&
-        Categories.slice(0, 8).map((category) => (
+        {categories.slice(0, 8).map((category) => (
           <Link key={category._id} href={`/category/${category.permaLink}`}>
             {category.name}
           </Link>
         ))}
         <Link href="/allCategories">
-          <button>View all </button>
+          <button className={styles.viewAllBtn}>View all</button>
         </Link>
       </div>
     );
@@ -81,121 +113,20 @@ const Navbar = () => {
 
   return (
     <div
-      style={{
-        display: "flex",
-        width: "100%",
-        height: "120px",
-        backgroundColor: "white",
-      }}
+      className={`${styles.navbar} ${
+        scrollDirection === "down" ? styles.scrolledDown : styles.scrolledUp
+      }`}
     >
-       <div className={styles.menuIcon} onClick={toggleMenu}>
-        <Image src={threelines} alt="menu" width={30} height={30} />
-      </div>
-      <div className={styles.logo}>
-        <Image
-          src={image}
-          alt="pic"
-          style={{ width: "100%", height: "80px" }}
-        />
-      </div>
-      <div className={styles.navbar}>
-        <div
-          className={styles.upper}
-          style={{ display: "flex", marginLeft: "30px" }}
-        >
-          <div className={styles.upper}>
-            <a
-              href="https://www.facebook.com/woxnpackagingsolution/"
-              target="_blank"
-              style={{ marginLeft: "30%", width: "3%" }}
-            >
-              <Image
-                src={fb}
-                style={{
-                  height: "25px",
-                  width: "100%",
-                  marginTop: "7px",
-                  // marginLeft: "40%",
-                }}
-                alt="pic"
-              />
-            </a>
-            <a
-              href="https://www.instagram.com/woxnpackagingsolution/"
-              target="_blank"
-              style={{ marginLeft: "7px", width: "3%" }}
-            >
-              <Image
-                src={insta}
-                alt="pic"
-                style={{
-                  height: "27px",
-                  width: "100%",
-                  marginTop: "7px",
-                  // marginLeft: "10px",
-                }}
-              />
-            </a>
-            <a
-              href="https://www.youtube.com/@woxnpackagingsolution"
-              target="_blank"
-              style={{ marginLeft: "5px", width: "4%" }}
-            >
-              <Image
-                src={you}
-                alt="pic"
-                style={{
-                  height: "20px",
-                  width: "100%",
-                  marginTop: "10px",
-                  // marginLeft: "4px",
-                }}
-              />
-            </a>
-
-            <a href="mailto:packagingsolutionindia@gmail.com" target="_blank">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: "white",
-                  marginTop: "9px",
-                  marginLeft: "30px",
-                }}
-              >
-                <Image
-                  src={email}
-                  alt="email"
-                  width={20}
-                  style={{ marginRight: "5px" }}
-                />
-                <p style={{ margin: 0 }}>packagingsolutionindia@gmail.com</p>
-              </div>
-            </a>
-
-            <a href="tel:+919818293306">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: "white",
-                  marginTop: "9px",
-                  marginLeft: "30px",
-                }}
-              >
-                <Image
-                  src={phone}
-                  alt="phone"
-                  width={20}
-                  style={{ marginRight: "5px" }}
-                />
-                <p style={{ margin: 0 }}>+91 9818293306</p>
-              </div>
-            </a>
+      <div className={styles.container}>
+        <div className={styles.logoContainer}>
+          <div className={styles.menuIcon} onClick={toggleMenu}>
+            <Image src={threelines} alt="menu" width={30} height={30} />
           </div>
+          <Link href={"/"}>
+            <Image src={logo} alt="logo" className={styles.logo} />
+          </Link>
         </div>
-        <div className={`${styles.tabs} ${styles.showMenu ? "show-menu" : ""}`}>
-          
+        <div className={`${styles.tabs} ${showMenu ? styles.showMenu : ""}`}>
           <Link href="/">Home</Link>
           <div
             className={styles.dropdownContainer}
@@ -207,28 +138,36 @@ const Navbar = () => {
               onClick={toggleShowAllCategories}
             >
               <Link href="/allCategories">Product</Link>
+              <span className={styles.dropdownArrow}>▼</span>
             </div>
             {showAllCategories && renderCategoriesDropdown()}
           </div>
-          <Link href="/videos"> Videos</Link>
+          <Link href="/videos">Videos</Link>
           <Link href="/about">About</Link>
           <Link href="/contactus">Contact Us</Link>
-          <div className={styles.pictures}>
-            <Image
-              src={Gem}
-              alt="pic"
-              style={{ width: "100%", height: "80px" }}
-            />
-            <Image
-              src={ISO}
-              alt="pic"
-              style={{ width: "100%", height: "80px" }}
-            />
-            <div className={styles.underline}></div>
+          <div className={styles.searchContainer}>
+            
+              <input
+                type="text"
+                className={styles.searchInput}
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleInputChange}
+                // style={{ backgroundColor: "#0056b3" }}
+              />
+              {renderSuggestions()}
+              <FontAwesomeIcon
+               height={20}
+               width={20}
+                icon={faSearch}
+                style={{position:"absolute", left:"280"}}
+                // className={styles.searchIcon}
+                // style={{ backgroundColor: "#0056b3", marginLeft: "0" }}
+               
+              />
+         
           </div>
-          
         </div>
-        
       </div>
     </div>
   );

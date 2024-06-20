@@ -95,7 +95,7 @@
 
   .main-image {
     margin-top: 20px;
-    width: 100%; /* Use full width on small screens */
+    width: 80%; /* Use full width on small screens */
     height: auto; /* Maintain aspect ratio */
   }
 
@@ -108,12 +108,16 @@
   }
 
   .thumbnail {
-    margin: 5px;
+    // margin: 5px;
   }
 
   .content {
     margin-left: 0;
-    margin-top: 20px;
-    text-align: center;
+    // margin-top: 20px;
+    // text-align: center;
+  }
+  .description{
+    margin-left: 0;
+    width: 80%;
   }
 }

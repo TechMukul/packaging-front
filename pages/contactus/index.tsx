@@ -46,7 +46,7 @@ const Contact = ({ Categories }) => {
         <Image
           src="https://t4.ftcdn.net/jpg/02/16/47/49/360_F_216474977_WJLkwxJAqyeW3QJswJ0C2JgNQsJNSzCo.jpg"
           alt="Contact Us"
-          layout="responsive"
+          // layout="responsive"
           width={1248}
           height={300}
           className={styles.headerImage}

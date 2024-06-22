@@ -37,7 +37,9 @@ const nextConfig = {
       'as1.ftcdn.net',
       'cdn.imgbin.com',
       't4.ftcdn.net',
-      'www.nextvisual.com.my'
+      'www.nextvisual.com.my',
+      'www.joseloffgallery.org',
+      '5.imimg.com'
     ],
   },
   

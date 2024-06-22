@@ -20,7 +20,7 @@ const LazyCarousel = lazy(() => import("../../component/Carousel/Carousel"));
 const Homepage = ({ carouselData, categories }) => {
   console.log(carouselData);
   return (
-    <div >
+    <div>
       <Navbar />
       {/* <Search /> */}
       {/* Wrap the lazy-loaded component in Suspense */}

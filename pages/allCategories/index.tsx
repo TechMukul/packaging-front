@@ -80,7 +80,27 @@ const Index: React.FC = () => {
       </div>
     );
   }
+  const sendWhatsAppMessage = (productName) => {
+    const phoneNumber = "+919818293306";
+    const message = encodeURIComponent(
+      `Hello sir, I am interested in ${productName}. Please send me quote for the same and also share the videos.`
+    );
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+    if (isMobile) {
+      // Open WhatsApp app on mobile
+      window.open(
+        `whatsapp://send?phone=${phoneNumber}&text=${message}`,
+        "_blank"
+      );
+    } else {
+      // Open WhatsApp Web on desktop/laptop
+      window.open(
+        `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`,
+        "_blank"
+      );
+    }
+  };
   return (
     <>
       <Navbar />
@@ -102,9 +122,9 @@ const Index: React.FC = () => {
                   </Link>
                 </div>
                 <div className={styles.buttonContainer}>
-                  <Link href={`/request-quote/${category._id}`}>
-                    <button className={styles.requestButton}>Request Quote</button>
-                  </Link>
+                 
+                    <button className={styles.requestButton} onClick={()=>sendWhatsAppMessage(category.name)}>Request Quote</button>
+                 
                 </div>
               </div>
             </div>

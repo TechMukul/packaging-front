@@ -18,6 +18,27 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
 
+const sendWhatsAppMessage = (productName) => {
+  const phoneNumber = "+919818293306";
+  const message = encodeURIComponent(
+    `Hello sir, I am interested in ${productName}. Please send me quote for the same and also share the videos.`
+  );
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    // Open WhatsApp app on mobile
+    window.open(
+      `whatsapp://send?phone=${phoneNumber}&text=${message}`,
+      "_blank"
+    );
+  } else {
+    // Open WhatsApp Web on desktop/laptop
+    window.open(
+      `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`,
+      "_blank"
+    );
+  }
+};
 const Feature = () => {
   const [categories, setCategories] = useState<any>([]);
 
@@ -58,7 +79,7 @@ const Feature = () => {
               />
               <p className={styles.productdescription}>{category.name}</p>
             </Link>
-            <button className={styles.button}>Request quote</button>
+            <button className={styles.button} onClick={()=>sendWhatsAppMessage(category.name)}>Request quote</button>
           </div>
         ))}
       </div>

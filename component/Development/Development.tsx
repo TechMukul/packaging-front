@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
 import Image from "next/image";
-import mission from '../../public/image/mission.png'
+import mission from '../../public/image/mission.png'; // Ensure your image import path is correct
 
 const Development = () => {
   return (
@@ -38,17 +38,9 @@ const Development = () => {
               </li>
             </ul>
           </div>
-          <div className={styles.imageContainer}>
-            <Image
-              src={mission}
-              alt="pic"
-              width={300}
-              height={250}
-              className={styles.categoryImage}
-            />
-          </div>
         </div>
       </div>
+      <div className={styles.backgroundImage}></div>
     </div>
   );
 };

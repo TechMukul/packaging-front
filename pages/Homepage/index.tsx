@@ -18,7 +18,7 @@ import Client from "../../component/Client/Client";
 const LazyCarousel = lazy(() => import("../../component/Carousel/Carousel"));
 
 const Homepage = ({ carouselData, categories }) => {
-  console.log(carouselData);
+  // console.log(carouselData); 
   return (
     <div>
       <Navbar />

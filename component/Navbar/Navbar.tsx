@@ -70,7 +70,7 @@ const Navbar = () => {
 
   const handleSearchItemClick = (category: any) => {
     setSearchTerm("");
-    console.log(`Selected category: ${category.name}`);
+    // console.log(`Selected category: ${category.name}`);
     // Additional actions on item click (e.g., navigate to category page)
   };
 

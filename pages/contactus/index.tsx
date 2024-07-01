@@ -55,7 +55,7 @@ const Contact = ({ Categories }) => {
           Home &nbsp; - Contact Us
         </div>
         <div className={styles.header}>
-          <h1>Contact Us</h1>
+          {/* <h1>Contact Us</h1> */}
         </div>
 
         <div className={styles.section}>

@@ -39,7 +39,10 @@ const nextConfig = {
       't4.ftcdn.net',
       'www.nextvisual.com.my',
       'www.joseloffgallery.org',
-      '5.imimg.com'
+      '5.imimg.com',
+      'img.freepik.com',
+      'www.pngkit.com',
+      'markfedpunjab.com'
     ],
   },
   

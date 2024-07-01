@@ -18,7 +18,7 @@ const Banner = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
-console.log(bgImage)
+// console.log(bgImage)
   return (
     <>
       <div className={styles.banner} style={{ backgroundImage: `${bgImage}` }}>

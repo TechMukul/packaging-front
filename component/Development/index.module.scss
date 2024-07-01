@@ -1,26 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
 
 .banner {
-  background-color: #0056b3;
+  position: relative;
+  // background-color: #0056b3;
+  // background: url('https://www.pngkit.com/png/full/411-4119072_business-banner-png-department-of-computer-applications.png');
   height: 400px; /* Adjust height as needed */
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end; /* Align text to the right */
   align-items: center;
-  color: white;
-}
-
-.categoryImage {
-  margin-top: 60px;
+  color: black;
+  overflow: hidden; /* Ensure background image does not overflow */
 }
 
 .bannerText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 1200px; /* Adjust as per your design */
-  margin: 0 auto;
+  position: relative;
+  z-index: 1; /* Ensure text appears above background */
+  max-width: 1000px; /* Adjust as per your design */
   padding: 20px;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://www.pngkit.com/png/full/411-4119072_business-banner-png-department-of-computer-applications.png"); /* Replace with your background image URL */
+  background-size: cover;
+  background-position: center;
+  // opacity: 0.2; /* Adjust opacity as needed */
 }
 
 .flex {
@@ -30,17 +39,9 @@
 }
 
 .textContainer {
-  flex: 3; /* Take up remaining space */
-  margin-right: 20px;
-}
-
-.imageContainer {
-  flex: 1; /* Take up remaining space */
-  margin-left: 20px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  // margin-right: 20px;
+  margin-left: 400px;
+  width: 50%; /* Adjust width as per your design */
 }
 
 .heading {
@@ -51,7 +52,7 @@
 }
 
 .hr {
-  border: 1.5px solid white;
+  border: 1.5px solid black;
   margin: 0;
   width: 95%;
 }
@@ -60,7 +61,7 @@
   list-style: none;
   padding: 0;
   font-size: large;
-  color: white;
+  color: black;
   text-align: justify;
   margin-top: 10px;
 }
@@ -70,32 +71,19 @@
 }
 
 @media (max-width: 768px) {
-  .banner{height: 550px;}
-  .flex {
-    flex-direction: column;
-    align-items: center;
+  .banner {
+    height: 550px;
   }
 
   .textContainer {
     margin-right: 0;
     text-align: center;
-  }
-
-  .imageContainer {
-    margin-left: 0;
-    margin-top: 20px;
-  }
-
-  .heading {
-    font-size: 20px;
-  }
-  .categoryImage{
-    display: none;
+    width: 100%; /* Adjust width for mobile */
   }
 }
 
 @media (max-width: 480px) {
   .heading {
-    font-size: 15px;
+    font-size: 20px;
   }
 }

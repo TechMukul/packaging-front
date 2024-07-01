@@ -60,6 +60,12 @@ const products = [
       description:"Sfurti",
       image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5PNDCOp3yznYFELEQVz0OIZH7-aRMmDRVYg&s",
       // image:"p20tICAIAgCAIAgCAIAgCARp7D4EAlAEAQBAEAQBAEAQDlfqRk8TSFWlnQ5CCQCEKCq19R5dARm01KjrK17b9CX+J8VxP1JUC4t62DNXiFZypaqcq0NLNZCQbg3UA+nKvax4pJN5JNPodx9HU2ocMotXQMzV0KAjRgxpU2fb+9cliLkKx94iu6xLVn1Lhl+TSzXzctL33vYX+8nD2UQluzakjggCAIAgCAIAgCAIBGnsPgQCUAQBAEAQBAEAQBAKrj/CBiUAvZ1N1baxBBGv4SGVWB1sVU2IuDCUc6rc6ng4zF8AIfNV4dRr1LAF25gzsBluyUkZNgPUTpYWUACR5l/kvhn5EseDLfhPDq1dlbEmmq28tNG/6ajKV0tmFzlJKLYaBFLMxNOWjWgykdjLSAgCAIAgCAIAgCAIAgEaew+BAJQBAEAQBAEAQBAEAq+PcQSmmR8/7RWUFSikXst7uQL3cf0IBymBxuHWmtQPiimYr5lUMc6MoNy2gB2vsb3v06DN9PcRw1CpZGrVCVylitOwIN2uc3qvc2G5vvpAO5nAIAgCAIAgCAIAgCAIBGnsPgQCUAQBAEAQBAEAQBAPGUHcA/MA8NMdhAGQdhAJQBAEAQBAEAQBAEAQBANZcRYAW+8A98T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gH//2Q=="
+    },
+    {
+      id:10,
+      description:"Markfed",
+      image:"https://markfedpunjab.com/markfed/wp-content/uploads/2021/09/logo-314x190.jpg",
+      // image:"p20tICAIAgCAIAgCAIAgCARp7D4EAlAEAQBAEAQBAEAQDlfqRk8TSFWlnQ5CCQCEKCq19R5dARm01KjrK17b9CX+J8VxP1JUC4t62DNXiFZypaqcq0NLNZCQbg3UA+nKvax4pJN5JNPodx9HU2ocMotXQMzV0KAjRgxpU2fb+9cliLkKx94iu6xLVn1Lhl+TSzXzctL33vYX+8nD2UQluzakjggCAIAgCAIAgCAIBGnsPgQCUAQBAEAQBAEAQBAKrj/CBiUAvZ1N1baxBBGv4SGVWB1sVU2IuDCUc6rc6ng4zF8AIfNV4dRr1LAF25gzsBluyUkZNgPUTpYWUACR5l/kvhn5EseDLfhPDq1dlbEmmq28tNG/6ajKV0tmFzlJKLYaBFLMxNOWjWgykdjLSAgCAIAgCAIAgCAIAgEaew+BAJQBAEAQBAEAQBAEAq+PcQSmmR8/7RWUFSikXst7uQL3cf0IBymBxuHWmtQPiimYr5lUMc6MoNy2gB2vsb3v06DN9PcRw1CpZGrVCVylitOwIN2uc3qvc2G5vvpAO5nAIAgCAIAgCAIAgCAIBGnsPgQCUAQBAEAQBAEAQBAPGUHcA/MA8NMdhAGQdhAJQBAEAQBAEAQBAEAQBANZcRYAW+8A98T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gDxPt94A8T7feAPE+33gH//2Q=="
     }
 //     {
 //       id: 9,
@@ -133,19 +139,21 @@ const Partners = () => {
             transition: isTransitioning ? 'transform 0.3s ease-in-out' : 'none',
           }}
         >
-          {[products[products.length - 1], ...products, products[0]].map((product, index) => (
-            <div key={index} className={styles.partnercard}>
-              <div className={styles.partnerimage}>
-                <Image
-                  src={product.image}
-                  alt={`partner ${product.id}`}
-                  className={styles.image}
-                  width={300}
-                  height={150}
-                />
-              </div>
-            </div>
-          ))}
+
+          {[...products.slice(-1), ...products, ...products.slice(0, 10)].map((product, index) => (
+  <div key={index} className={styles.partnercard}>
+    <div className={styles.partnerimage}>
+      <Image
+        src={product.image}
+        alt={`partner ${product.id}`}
+        className={styles.image}
+        width={300}
+        height={150}
+      />
+    </div>
+  </div>
+))}
+
         </div>
         <button onClick={nextCard} className={`${styles.navButton} ${styles.navRight}`}>
           ❯
